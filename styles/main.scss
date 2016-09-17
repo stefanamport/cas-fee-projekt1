@@ -1,0 +1,148 @@
+@import "reset";
+
+$main-font-family: "Open Sans", sans-serif;
+$secondary-font-family:  "Francois One", sans-serif;
+
+$main-color: red;
+$main-gray: #f3f3f3;
+$main-gray-dark: darken(#f3f3f3, 20);
+
+$boxpadding: 10px;
+
+$middler: 600px;
+
+html {
+	font-family: $main-font-family;
+}
+
+body {
+	font-size: 0.9em;
+	line-height: 1.2em;
+}
+
+table {
+	td, th {
+		text-align: left;
+		padding: $boxpadding;
+	}
+
+	th {
+		font-size: 0.7em;
+	}
+
+	tr {
+		&:nth-child(2n) {
+			background: $main-gray;
+		}
+	}
+}
+
+h1 {
+	font-family: $secondary-font-family;
+	color: $main-color;
+	font-size: 3em;
+	line-height: 1.2em;
+}
+
+.btn {
+	border: 0px;
+
+	background: $main-gray-dark;
+
+	padding: 5px 10px;
+	border-radius: 3px;
+
+	cursor: pointer;
+
+	transition: .2s all;
+
+	&:hover {
+		background: lighten($main-gray-dark, 5); 
+	}
+
+	&.btn-hervorgehoben {
+		background: $main-color;
+		color: #fff;
+		font-weight: bold;
+
+		&:hover {
+			background: darken($main-color, 5); 
+		}
+	}
+
+	&.btn-ghost {
+		background: none;
+		border: 1px solid $main-gray-dark;
+		color: $main-gray-dark;
+
+		&:hover {
+			color: #000;
+			border-color: 1px solid #000;
+		}
+	}
+}
+
+header {
+	box-shadow: 0 0 5px rgba(0,0,0,.3);
+
+	.logo {
+		display: block;
+
+		padding: $boxpadding;
+
+		.logotitle {
+			font-size: 1em;
+			font-weight: normal;
+		}
+	}
+
+	.subheader {
+		background: $main-gray;
+		padding: $boxpadding/2 $boxpadding;
+		display: flex;
+
+
+		.sub-rechts, .sub-links {
+			width: 50%;
+		}
+		.sub-rechts {
+
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+
+			.designwahl {
+				font-size: 0.7em;
+			}
+
+		}
+	}
+}
+
+main {
+	padding: $boxpadding* 2 $boxpadding;
+}
+
+.filteroptionen {
+	
+	margin-bottom: $boxpadding*2;
+
+	display: flex;
+
+	ul {
+
+		margin-right: $boxpadding*2;
+
+		li {
+			margin: 0px;
+			padding: 0px;
+			display: inline-block;
+		}
+	}
+}
+
+.todo-liste {
+	table {
+		width: 100%;
+	}	
+}

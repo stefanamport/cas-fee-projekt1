@@ -1,0 +1,30 @@
+{
+  "name": "cas-fee-projekt1",
+  "version": "1.0.0",
+  "description": "Note Tool",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "browser-sync": "^2.16.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^2.0.0",
+    "imagemin-pngquant": "^5.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefanamport/cas-fee-projekt1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stefanamport/cas-fee-projekt1/issues"
+  },
+  "homepage": "https://github.com/stefanamport/cas-fee-projekt1#readme"
+}
