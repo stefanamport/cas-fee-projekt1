@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		
+		<meta charset="utf-8"/>
+
+		<meta name="description" content="Note Tool - CAS FEE Project 1">
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+		<title>Note Tool</title>
+
+		<link href='https://fonts.googleapis.com/css?family=Caveat+Brush|Francois+One' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" href="dist/styles/main.css">
+
+	</head>
+
+	<body>
+		
+		<header>
+			
+			<div class="logo">
+				<div class="logocontent">
+					<div class="logotitle">Stefan Amport's</div>
+					<div class="logotext">ToDo</div>
+				</div>
+			</div>
+
+			<div class="subheader">
+				<div class="sub-links">
+					<button class="btn btn-hervorgehoben" id="newnote">Neuer Eintrag</button>
+				</div>
+				
+
+				<div class="sub-rechts">
+					<div class="designwahl">
+						<label for="design">Design wählen</label>
+					    <select name="design" id="">
+					      <option value="design-standard" selected>Standard</option>
+					      <option value="design-negativ">Negativ</option>
+					      <option value="design-kitten">Kitten Mode</option>
+					    </select>
+				    </div>
+				</header>
+			</div>
+			
+
+		</header>
+
+		<main>
+			
+			<form>
+				<div class="formrow">
+					<label for="titel">Titel</label>
+					<input type="text" id="titel" name="titel" />
+				</div>
+				<div class="formrow">
+					<label for="text">Text</label>
+					<textarea id="text" name="text"></textarea>
+				</div>
+				<div class="formrow">
+					<label for="prioritaet">Priorität</label>
+					 <select name="prioritaet" id="prioritaet">
+					      <option value="1" selected>!</option>
+					      <option value="2">!!</option>
+					      <option value="3">!!!</option>
+					    </select>
+				</div>
+				<div class="formrow">
+					<label for="erledigen-bis">zu erledigen bis</label>
+					<textarea id="erledigen-bis" name="erledigen-bis"></textarea>
+				</div>
+
+				<div class="formrow submitarea">
+					<button type="submit" class="btn btn-hervorgehoben">speichern</button>
+					<button type="cancel" class="btn btn-ghost">abbrechen</button>
+				</div>
+			</form>
+
+		</main>
+
+	</body>
+</html>

@@ -21,8 +21,10 @@
 		<header>
 			
 			<div class="logo">
-				<div class="logotitle">Stefan Amport's</div>
-				<h1>ToDo</h1>
+				<div class="logocontent">
+					<div class="logotitle">Stefan Amport's</div>
+					<div class="logotext">ToDo</div>
+				</div>
 			</div>
 
 			<div class="subheader">
@@ -36,7 +38,8 @@
 						<label for="design">Design wählen</label>
 					    <select name="design" id="">
 					      <option value="design-standard" selected>Standard</option>
-					      <option value="design-schwarzweiss">Schwarz/Weiss</option>
+					      <option value="design-negativ">Negativ</option>
+					      <option value="design-kitten">Kitten Mode</option>
 					    </select>
 				    </div>
 				</header>
@@ -50,9 +53,9 @@
 			<div class="filteroptionen">
 				
 				<ul class="filters">
-					<li><button class="btn">nach Erledigungsdatum</button></li>
-					<li><button class="btn">nach Erstellungsdatum</button></li>
-					<li><button class="btn">nach Priorität</button></li>
+					<li><button class="btn btn-ghost active">nach Erledigungsdatum</button></li>
+					<li><button class="btn btn-ghost">nach Erstellungsdatum</button></li>
+					<li><button class="btn btn-ghost">nach Priorität</button></li>
 				</ul>
 
 				<ul class="filters">
@@ -83,7 +86,11 @@
 				    	</ul>
 				    </td>
 				    <td>
-				    	PRIORITäT IMGs
+				    	<div class="priority">
+				    		<span>!</span>	
+				    		<span>!</span>	
+				    		<span>!</span>	
+				    	</div>
 				    </td>
 				    <td>
 				    	<button class="btn btn-ghost">bearbeiten</button>
