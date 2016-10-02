@@ -246,6 +246,10 @@ main {
 
 #todo-entries {
 	.todo-entry {
+		
+		&.done {
+			opacity: .5;
+		}
 
 		> div {
 			padding: 0 $boxpadding;
@@ -269,6 +273,8 @@ form {
 
 		padding: 5px 10px;
 		width: 80%;
+
+		font-family: $main-font-family;
 
 		&:focus {
 			outline: 0px;

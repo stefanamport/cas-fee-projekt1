@@ -59,7 +59,7 @@
 				</ul>
 
 				<ul class="filters">
-					<li><button class="btn btn-ghost" data-filter="showDone">zeige erledigte</button></li>
+					<li><button class="btn btn-ghost" data-filter="showAll">zeige erledigte</button></li>
 				</ul>
 
 			</div>
@@ -80,35 +80,34 @@
 		<script src="js/main.js" ></script>
 
 		<script type='text/template' id='todoEntry'>
+				{{#each entries}}
+					<div class="todo-entry card grid {{#if done}}done{{/if}}" data-id="{{id}}">
+					    <div class="grelem gr-1">
+					    	<div class="small">zu erledigen bis:</div>
+					    	{{todoDate}}
+					    </div>
+					    <div class="priority grelem gr-1" data-priority="{{priority}}">
+					    	{{#for priority}}
+								<span>!</span>	
+							{{/for}}
+					    </div>
+					    <div class="grelem gr-2">
+					    	<h2>{{todoTitle}}</h2>
+					    	{{todoText}}
+					    </div>
 
-			{{#each entries}}
-				<div class="todo-entry card grid" data-id="{{id}}">
-				    <div class="grelem gr-1">
-				    	<div class="small">zu erledigen bis:</div>
-				    	{{todoDate}}
-				    </div>
-				    <div class="priority grelem gr-1" data-priority="{{priority}}">
-				    	{{#for priority}}
-							<span>!</span>	
-						{{/for}}
-				    </div>
-				    <div class="grelem gr-2">
-				    	<h2>{{todoTitle}}</h2>
-				    	{{todoText}}
-				    </div>
+						<div class="grelelem gr-auto">
+					    	<button class="btn entryDone">erledigt</button>
+					    	<button class="btn btn-ghost entryEdit">bearbeiten</button>
+					    </div>
 
-					<div class="grelelem gr-auto">
-				    	<button class="btn entryDone">erledigt</button>
-				    	<button class="btn btn-ghost entryEdit">bearbeiten</button>
-				    </div>
-
-				</div>
-			{{/each}} 
+					</div>
+				{{/each}}
 		</script>
 
 		<script type='text/template' id='newNoteForm'>
 			
-			<form action="/" method="post">
+			<form id="newEntry">
 				<div class="formrow">
 					<label for="todoDate">Titel</label>
 					<input type="text" id="todoTitle" name="todoTitle" value="{{entry.todoTitle}}"/>
@@ -130,7 +129,7 @@
 					<input type="date" id="todoDate" name="todoDate" value="{{entry.todoDate}}"/>
 				</div>
 				<div class="formrow submitarea">
-					<button type="submit" id="addEntry" class="btn btn-hervorgehoben">speichern</button>
+					<button type="submit" class="btn btn-hervorgehoben">speichern</button>
 					<button type="reset" id="closeForm" class="btn btn-ghost">abbrechen</button>
 				</div>
 			</form>
