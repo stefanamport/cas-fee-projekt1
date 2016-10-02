@@ -9,7 +9,7 @@ $main-gray-dark: darken(#f3f3f3, 20);
 
 $boxpadding: 10px;
 
-$middler: 600px;
+$middler: 500px;
 
 html {
 	font-family: $main-font-family;
@@ -20,26 +20,11 @@ body {
 	line-height: 1.2em;
 }
 
-table {
-	td, th {
-		text-align: left;
-		padding: $boxpadding;
-	}
+.card {
+	padding: $boxpadding;
+	box-shadow: 0 0 5px rgba(0,0,0,.2);
 
-	th {
-		font-size: 0.7em;
-		color: $main-gray-dark;
-		padding-top: 0px;
-		padding-bottom: 0;
-		border-bottom: 1px solid lighten(#000, 60);
-
-	}
-
-	tr {
-		&:nth-child(2n) {
-			background: $main-gray;
-		}
-	}
+	margin-bottom: 10px;
 }
 
 h1 {
@@ -47,6 +32,11 @@ h1 {
 	color: $main-color;
 	font-size: 3em;
 	line-height: 1.2em;
+}
+
+.small {
+	font-size: 0.7em;
+	color: $main-gray-dark;
 }
 
 .btn {
@@ -94,6 +84,27 @@ h1 {
 	}
 }
 
+.grid {
+	display: flex;
+	flex-flow: row wrap;
+
+	.grelem {
+		box-sizing: border-box;
+		margin-bottom: 10px;
+	}
+
+	.gr-1 {
+		width: 25%;
+	}
+	.gr-2 {
+		width: 50%;
+	}
+	.gr-auto {
+		width: auto;
+	}
+
+}
+
 .priority {
 	font-weight: bold;
 	font-size: 1.2em;
@@ -112,6 +123,36 @@ h1 {
 		color: red;
 	}
 }
+
+.lightbox {
+	
+	background: rgba(255,255,255,.8);
+
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 99;
+
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	justify-content: center;
+  	align-items: flex-start;
+
+	.content {
+		background: #fff;
+		padding: $boxpadding;
+
+		width: $middler;
+
+		box-shadow: 0 0 20px rgba(0,0,0,.1);
+
+	}
+
+}
+
+// Main Styles
 
 header {
 	box-shadow: 0 0 5px rgba(0,0,0,.3);
@@ -185,10 +226,7 @@ main {
 
 	display: flex;
 
-	border: 1px solid $main-gray-dark;
-	border-bottom: 0px;
-
-	padding: $boxpadding;
+	margin-bottom: 10px;
 
 	ul {
 
@@ -203,13 +241,16 @@ main {
 }
 
 .todo-liste {
-	
-	border: 1px solid $main-gray-dark;
-	border-top: 1px solid #000;
 
-	table {
-		width: 100%;
-	}	
+}
+
+#todo-entries {
+	.todo-entry {
+
+		> div {
+			padding: 0 $boxpadding;
+		}
+	}
 }
 
 /* Form Stylings */
@@ -265,23 +306,15 @@ form {
 		$neg-bright: #fff;
 		$neg-bright-dark: darken($neg-bright, 40);
 		$neg-bright-darker: darken($neg-bright, 80);
-
+		
+		$width-slim: 600px;
 
 		background: $neg-dark;
 		color: $neg-bright;
 		
-		table {
-
-			th {
-				color: $neg-bright-darker;
-				border-bottom: $neg-dark-brighter;
-			}
-
-			tr {
-				&:nth-child(2n) {
-					background: $neg-dark-brighter;
-				}
-			}
+		.card {
+			background: $neg-dark-brighter;
+			border-top: 1px solid #fff;
 		}
 
 		header {

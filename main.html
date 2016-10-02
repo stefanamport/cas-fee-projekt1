@@ -11,9 +11,6 @@
 		<title>ToDo Tool</title>
 
 		<link href='https://fonts.googleapis.com/css?family=Caveat+Brush|Francois+One' rel='stylesheet' type='text/css'>
-		
-		<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
-		<script src="js/main.js" ></script>
 	
 		<link rel="stylesheet" href="dist/styles/main.css">
 
@@ -32,7 +29,7 @@
 
 			<div class="subheader">
 				<div class="sub-links">
-					<button class="btn btn-hervorgehoben" id="newnote">Neuer Eintrag</button>
+					<button class="btn btn-hervorgehoben" id="showEntryForm">Neuer Eintrag</button>
 				</div>
 				
 
@@ -68,43 +65,77 @@
 			</div>
 
 			<div class="todo-liste">
-				
-				<table>
-				  <tr>
-				    <th>erledigt</th>
-				    <th>Erledigungsdatum</th>
-				    <th>Aufgabe</th> 
-				    <th>Priorität</th>
-				    <th>bearbeiten</th> 
-				  </tr>
-				  <tr>
-				    <td><label><input type="checkbox" class="erledigt"> erledigt</label></td>
-				    <td>00.00.0000</td> 
-				    <td>
-				    	<h2>Aufgabentitel</h2>
-				    	<ul>
-				    		<li>Details</li>
-				    		<li>Details</li>
-				    		<li>Details</li>
-				    	</ul>
-				    </td>
-				    <td>
-				    	<div class="priority">
-				    		<span>!</span>	
-				    		<span>!</span>	
-				    		<span>!</span>	
-				    	</div>
-				    </td>
-				    <td>
-				    	<button class="btn btn-ghost">bearbeiten</button>
-				    </td>
-				  </tr>
-				</table>
+
+				<div id="todo-entries">
+					
+				</div>
 
 			</div>
 
 
 		</main>
+
+		<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+		<script src="js/handlebars.min.js" ></script>
+		<script src="js/main.js" ></script>
+
+		<script type='text/template' id='todoEntry'>
+
+			{{#each entries}}
+				<div class="todo-entry card grid" data-id="{{id}}">
+				    <div class="grelem gr-1">
+				    	<div class="small">zu erledigen bis:</div>
+				    	{{todoDate}}
+				    </div>
+				    <div class="priority grelem gr-1" data-priority="{{priority}}">
+				    	{{#for priority}}
+							<span>!</span>	
+						{{/for}}
+				    </div>
+				    <div class="grelem gr-2">
+				    	<h2>{{todoTitle}}</h2>
+				    	{{todoText}}
+				    </div>
+
+					<div class="grelelem gr-auto">
+				    	<button class="btn entryDone">erledigt</button>
+				    	<button class="btn btn-ghost entryEdit">bearbeiten</button>
+				    </div>
+
+				</div>
+			{{/each}} 
+		</script>
+
+		<script type='text/template' id='newNoteForm'>
+			
+			<form action="/" method="post">
+				<div class="formrow">
+					<label for="todoDate">Titel</label>
+					<input type="text" id="todoTitle" name="todoTitle" value="{{entry.todoTitle}}"/>
+				</div>
+				<div class="formrow">
+					<label for="text">Text</label>
+					<textarea rows="4" id="text" name="text">{{entry.todoText}}</textarea>
+				</div>
+				<div class="formrow">
+					<label for="prioritaet">Priorität TODO</label>
+					 <select name="prioritaet" id="prioritaet">
+					      <option value="1">!</option>
+					      <option value="2">!!</option>
+					      <option value="3">!!!</option>
+					    </select>
+				</div>
+				<div class="formrow">
+					<label for="todoDate">zu erledigen bis</label>
+					<input type="date" id="todoDate" name="todoDate" value="{{entry.todoDate}}"/>
+				</div>
+				<div class="formrow submitarea">
+					<button type="submit" id="addEntry" class="btn btn-hervorgehoben">speichern</button>
+					<button type="reset" id="closeForm" class="btn btn-ghost">abbrechen</button>
+				</div>
+			</form>
+
+		</script>
 
 	</body>
 </html>
