@@ -52,14 +52,14 @@
 			
 			<div class="filteroptionen">
 				
-				<ul class="filters">
-					<li><button class="btn btn-ghost active">nach Erledigungsdatum</button></li>
-					<li><button class="btn btn-ghost">nach Erstellungsdatum</button></li>
-					<li><button class="btn btn-ghost">nach Priorität</button></li>
+				<ul class="sorting">
+					<li><button class="btn btn-ghost active" data-sortby="todoDate" data-sortorder="ASC">nach Erledigungsdatum</button></li>
+					<li><button class="btn btn-ghost" data-sortby="id" data-sortorder="ASC">nach Erstellungsdatum</button></li>
+					<li><button class="btn btn-ghost" data-sortby="priority" data-sortorder="DESC">nach Priorität</button></li>
 				</ul>
 
 				<ul class="filters">
-					<li><button class="btn btn-ghost">zeige erledigte</button></li>
+					<li><button class="btn btn-ghost" data-filter="showDone">zeige erledigte</button></li>
 				</ul>
 
 			</div>
