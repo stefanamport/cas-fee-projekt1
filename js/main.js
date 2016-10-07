@@ -1,8 +1,12 @@
 /*
 
   todo
-  - addEntry function not working
+  - addEntry
     add id
+
+- add triggers funktionieren nicht mehr, this konflikt?
+
+  this.showEntryForm(entryID);
 
   - responsive
 
@@ -24,11 +28,7 @@ function idGenerator() {
 
 $(function(){
 
-  // Inital Load Entries, set to local Storage and load into DOM
-  getEntriesFromServer();
-  displayEntries();
-
- // General Triggers
+ // General Triggers - integrate in class?
    $('#design').on('change', function(){
    		var designname = $(this).find("option:selected").val();
       $('body').addClass(designname);
@@ -40,7 +40,7 @@ $(function(){
    });
 
     $('#showEntryForm').on('click', function(){
-      showEntryForm();
+      todo.showEntryForm();
     });
 
     // Sorting / Filtering
@@ -48,138 +48,65 @@ $(function(){
       $('.sorting button').removeClass('active');
       $(this).addClass('active');
 
-      displayEntries();
+      todo.displayEntries();
     });
 
     $('.filters button').on('click', function(){
         $(this).toggleClass('active');
-        displayEntries();
+        todo.displayEntries();
     });
 
 });
 
 
-// Functions
 
-  // Add Triggers
-  function addFormTriggers (){
-    $('#closeForm').on('click', function(){
-      closeForm();
-    });
+// Handlebar helper
+Handlebars.registerHelper('for', function(fortimes, tpl) {
+    var output = '';
+    for(var i = 0; i < fortimes; ++i)
+        output += tpl.fn(i);
+    return output;
+});
 
-    $( "form#newEntry" ).submit(function( event ) {
 
-      addEntry($( this ).serializeArray());
 
-      event.preventDefault();
+// OOP Versuch
 
-      closeForm();
-      displayEntries();
+var todoClass = (function() {
+  
+  'use strict';
 
-    });
-
-  }
-
-  function addListTriggers (){
-    $('button.entryDone').on('click', function(){
-      //todo - editEntry();
-    });
-
-    $('button.entryEdit').on('click', function(){
-
-      var entryID = $(this).parents('.todo-entry').data('id');
-      showEntryForm(entryID);
-    });
-  }
-
-  // Show the Entry Form as Lightbox
-  function showEntryForm(id) {
-
-    var entrydates = [];
-
-    if (id>0) {
-      var entrydates = getSingleEntry(id);
+  function todoClass(arg1, arg2) {
+    // enforces new
+    if (!(this instanceof todoClass)) {
+      return new todoClass();
     }
+    // constructor body
+  }
+  
+  todoClass.prototype.init = function() {
+    console.log('run');
+    this.getEntriesFromServer();
+    this.displayEntries();
 
-    var source   = $("#newNoteForm").html();
+  }
+
+  todoClass.prototype.displayEntries = function (){
+
+    var entries = this.loadEntries();
+
+    var source   = $("#todoEntry").html();
+
     var template = Handlebars.compile(source);
-    var wrapper  = {entry: entrydates};
+    var wrapper  = {entries: entries};
 
-    //Show Lightbox
-    $('body').append('<div class="lightbox"><div class="content"></div></div>');
-
-    // Add Form To Lightbox
-    $('.lightbox .content').append(template(wrapper));
-
-    addFormTriggers();
+    $('#todo-entries').html(template(wrapper));
+    this.addListTriggers();
 
   }
 
-  // Close Form (Lightbox)
-  function closeForm() {
-    $('.lightbox').remove();
-  }
 
-
-  function getEntries (){
-
-    // Get Entries from local storage
-    entries = JSON.parse(sessionStorage.getItem('todoListEntries'));
-
-    return entries;
-
-  }
-
-  function addEntry (newEntry){
-
-      /*
-    var newEntryFormatted = [];
-
-    for (var i = 0; i < newEntry.length; ++i) {
-      newEntryFormatted[newEntry[i].name] = newEntry[i].value;
-    }
-
-    console.log(newEntryFormatted);
-
-    var entries = getEntries();
-
-    entries.push(newEntryFormatted);
-
-    setEntries(entries);
-    */
-
-      var entries = getEntries();
-
-      newEntryFormatted = {};
-      $( newEntry ).each(function(index, obj) {
-          newEntryFormatted[obj.name] = obj.value;
-          console.log(newEntryFormatted);
-      });
-
-      entries.push(newEntryFormatted);
-
-      newEntryFormatted.done = false;
-      newEntryFormatted.id = idGenerator();
-
-      console.log(JSON.stringify(entries));
-
-      setEntries(entries);
-
-  }
-
-  function setEntries (entries){
-
-    // Load into session
-    sessionStorage.setItem('todoListEntries', JSON.stringify(entries));
-
-    // and load copy to server
-    saveEntriesToServer(entries);
-
-  }
-
-  // Get The Entries form Server
-  // & load to local storage
-  function getEntriesFromServer () {
+  todoClass.prototype.getEntriesFromServer = function (){
 
     // Testing purposes - no server yet
     // set array to session, if empty
@@ -199,16 +126,10 @@ $(function(){
 
   }
 
-  // save The Entries to server
-  function saveEntriesToServer (){
-      // Not yet learned :-D - do nothing
-      console.log('es würde dann was auf den server laden :-)');
-  }
+  todoClass.prototype.loadEntries = function () {
 
-  // Load Entries from local Storage
-  function loadEntries() {
+    var entries = this.getEntries();
 
-    var entries = getEntries();
 
     // Get Sort Values
     var sortorder = $('.sorting button.active').data('sortorder');
@@ -270,8 +191,79 @@ $(function(){
     return entries;
   }
 
-  function getSingleEntry(id){
-    var entries = loadEntries();
+
+  // Close Form (Lightbox)
+  todoClass.prototype.closeForm = function () {
+    $('.lightbox').remove();
+  }
+
+
+  todoClass.prototype.getEntries = function () {
+
+    // Get Entries from local storage
+    var entries = JSON.parse(sessionStorage.getItem('todoListEntries'));
+
+    return entries;
+
+  }
+
+  todoClass.prototype.addEntry = function (newEntry) {
+
+      /*
+    var newEntryFormatted = [];
+
+    for (var i = 0; i < newEntry.length; ++i) {
+      newEntryFormatted[newEntry[i].name] = newEntry[i].value;
+    }
+
+    console.log(newEntryFormatted);
+
+    var entries = getEntries();
+
+    entries.push(newEntryFormatted);
+
+    setEntries(entries);
+    */
+
+      var entries = this.getEntries();
+
+      var newEntryFormatted = {};
+      $( newEntry ).each(function(index, obj) {
+          newEntryFormatted[obj.name] = obj.value;
+          console.log(newEntryFormatted);
+      });
+
+      entries.push(newEntryFormatted);
+
+      newEntryFormatted.done = false;
+      newEntryFormatted.id = idGenerator();
+
+      console.log(JSON.stringify(entries));
+
+      this.setEntries(entries);
+
+  }
+
+
+  todoClass.prototype.setEntries = function (entries) {
+
+    // Load into session
+    sessionStorage.setItem('todoListEntries', JSON.stringify(entries));
+
+    // and load copy to server
+    this.saveEntriesToServer(entries);
+
+  }
+
+  // save The Entries to server
+  todoClass.prototype.saveEntriesToServer = function () {
+      // Not yet learned :-D - do nothing
+      console.log('es würde dann was auf den server laden :-)');
+  }
+
+
+  todoClass.prototype.getSingleEntry = function (id) {
+    var entries = this.loadEntries();
 
     var entry = $.grep(entries,
       function(element){
@@ -281,24 +273,78 @@ $(function(){
     return entry[0];
   }
 
-  function displayEntries (){
 
-    var entries = loadEntries();
+   // Add Triggers
+  todoClass.prototype.addFormTriggers = function () {
 
-    var source   = $("#todoEntry").html();
+    // To Ask - Ist das sauber?
+    // this wird von jquery überschrieben, mit self kann this (die Klasse) immer noch angesprochen werden
+    var self = this;
+
+    $( "form#newEntry" ).submit(function( event ) {
+
+      event.preventDefault();
+
+      console.log($( this ).serializeArray());
+
+      self.addEntry($( this ).serializeArray());
+
+      
+
+      self.closeForm();
+      self.displayEntries();
+
+    });
+
+    $( "form #closeForm" ).on('click', function( ) {
+      self.closeForm();
+    });
+
+  }
+
+  todoClass.prototype.addListTriggers = function () {
+
+    // To Ask - Ist das sauber?
+    var self = this;
+
+    $('button.entryDone').on('click', function(){
+      //todo - editEntry();
+    });
+
+    $('button.entryEdit').on('click', function(){
+
+      var entryID = $(this).parents('.todo-entry').data('id');
+      self.showEntryForm(entryID);
+    });
+  }
+
+  // Show the Entry Form as Lightbox
+  todoClass.prototype.showEntryForm = function (id) {
+    var entrydates = [];
+
+    if (id>0) {
+      var entrydates = this.getSingleEntry(id);
+    }
+
+    var source   = $("#newNoteForm").html();
     var template = Handlebars.compile(source);
-    var wrapper  = {entries: entries};
+    var wrapper  = {entry: entrydates};
 
-    $('#todo-entries').html(template(wrapper));
-    addListTriggers();
+    //Show Lightbox
+    $('body').append('<div class="lightbox"><div class="content"></div></div>');
+
+    // Add Form To Lightbox
+    $('.lightbox .content').append(template(wrapper));
+
+    this.addFormTriggers();
 
   }
 
 
-// Handlebar helper
-Handlebars.registerHelper('for', function(fortimes, tpl) {
-    var output = '';
-    for(var i = 0; i < fortimes; ++i)
-        output += tpl.fn(i);
-    return output;
-});
+  return todoClass;
+
+})(jQuery, window, document);
+
+// Kick off
+todo = new todoClass();
+todo.init();

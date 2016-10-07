@@ -75,10 +75,6 @@
 
 		</main>
 
-		<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
-		<script src="js/handlebars.min.js" ></script>
-		<script src="js/main.js" ></script>
-
 		<script type='text/template' id='todoEntry'>
 				{{#each entries}}
 					<div class="todo-entry card grid {{#if done}}done{{/if}}" data-id="{{id}}">
@@ -135,6 +131,11 @@
 			</form>
 
 		</script>
+
+		<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+		<script src="js/handlebars.min.js" ></script>
+		<script src="js/main.js" ></script>
+
 
 	</body>
 </html>
