@@ -26,9 +26,33 @@ function idGenerator() {
     return Math.floor(Math.random() * 10) + Date.now();
 };
 
+// Handlebar extension "for"
+Handlebars.registerHelper('for', function(fortimes, tpl) {
+    var output = '';
+    for(var i = 0; i < fortimes; ++i)
+        output += tpl.fn(i);
+    return output;
+});
+
+Handlebars.registerHelper("formatDate", function(date, format) {
+
+    if (moment && date.length > 1) {
+      // can use other formats like 'lll' too
+      
+      var strippedDate = date.replace("/-/g", "");
+
+      return moment(strippedDate).format(format);
+    }
+    else {
+      return date;
+    }
+
+});
+
+
 $(function(){
 
- // General Triggers - integrate in class?
+ // General Triggers
    $('#design').on('change', function(){
    		var designname = $(this).find("option:selected").val();
       $('body').addClass(designname);
@@ -56,21 +80,18 @@ $(function(){
         todo.displayEntries();
     });
 
+    // Kick off
+    todo = new todoClass();
+    todo.displayEntries();
+    console.log(todo.entries);
+
 });
 
 
 
-// Handlebar helper
-Handlebars.registerHelper('for', function(fortimes, tpl) {
-    var output = '';
-    for(var i = 0; i < fortimes; ++i)
-        output += tpl.fn(i);
-    return output;
-});
 
 
-
-// OOP Versuch
+// The Todo Class
 
 var todoClass = (function() {
   
@@ -81,24 +102,54 @@ var todoClass = (function() {
     if (!(this instanceof todoClass)) {
       return new todoClass();
     }
-    // constructor body
+
+    this.entries = getEntriesFromServer();
+
   }
   
-  todoClass.prototype.init = function() {
-    console.log('run');
-    this.getEntriesFromServer();
-    this.displayEntries();
+
+  function getEntriesFromServer(){
+
+    // Testing purposes - no server yet
+    // set array to session, if empty
+
+    /*
+    var entries = [
+        {id: 2, done: false, todoDate: "1918-12-31", todoTitle: "Test 2", todoText: "lorem ipsum", priority: 1 },
+        {id: 1, done: true, todoDate: "2015-12-31", todoTitle: "Test 1", todoText: "222 lorem ipsum", priority: 2 },
+        {id: 3, done: false, todoDate: "1999-12-31", todoTitle: "Test 3", todoText: "222 lorem ipsum", priority: 3 },
+      ];
+    */
+
+    if (localStorage.getItem('todoListEntries')) {
+      var entries = JSON.parse(localStorage.getItem('todoListEntries'));
+    } else {
+      var entries = new Array();
+    }
+
+    return entries;
+
+    //if (!sessionStorage.getItem('todoListEntries')) {
+
+      // Set To Session Storage
+      //sessionStorage.setItem('todoListEntries', JSON.stringify(entries));
+
+    //}
 
   }
 
   todoClass.prototype.displayEntries = function (){
 
-    var entries = this.loadEntries();
+    //var entries = this.loadEntries();
+
+    if (!this.entries) {
+      return;
+    }
 
     var source   = $("#todoEntry").html();
 
     var template = Handlebars.compile(source);
-    var wrapper  = {entries: entries};
+    var wrapper  = {entries: this.sortFilterEntries(this.entries)};
 
     $('#todo-entries').html(template(wrapper));
     this.addListTriggers();
@@ -106,30 +157,7 @@ var todoClass = (function() {
   }
 
 
-  todoClass.prototype.getEntriesFromServer = function (){
-
-    // Testing purposes - no server yet
-    // set array to session, if empty
-
-    if (!sessionStorage.getItem('todoListEntries')) {
-
-      var entries = [
-        {id: 2, done: false, todoDate: "1918-12-31", todoTitle: "Test 2", todoText: "lorem ipsum", priority: 1 },
-        {id: 1, done: true, todoDate: "2015-12-31", todoTitle: "Test 1", todoText: "222 lorem ipsum", priority: 2 },
-        {id: 3, done: false, todoDate: "1999-12-31", todoTitle: "Test 3", todoText: "222 lorem ipsum", priority: 3 },
-      ];
-
-      // Set To Session Storage
-      sessionStorage.setItem('todoListEntries', JSON.stringify(entries));
-
-    }
-
-  }
-
-  todoClass.prototype.loadEntries = function () {
-
-    var entries = this.getEntries();
-
+  todoClass.prototype.sortFilterEntries = function (entries) {
 
     // Get Sort Values
     var sortorder = $('.sorting button.active').data('sortorder');
@@ -197,7 +225,7 @@ var todoClass = (function() {
     $('.lightbox').remove();
   }
 
-
+  /*
   todoClass.prototype.getEntries = function () {
 
     // Get Entries from local storage
@@ -206,26 +234,9 @@ var todoClass = (function() {
     return entries;
 
   }
+  */
 
   todoClass.prototype.addEntry = function (newEntry) {
-
-      /*
-    var newEntryFormatted = [];
-
-    for (var i = 0; i < newEntry.length; ++i) {
-      newEntryFormatted[newEntry[i].name] = newEntry[i].value;
-    }
-
-    console.log(newEntryFormatted);
-
-    var entries = getEntries();
-
-    entries.push(newEntryFormatted);
-
-    setEntries(entries);
-    */
-
-      var entries = this.getEntries();
 
       var newEntryFormatted = {};
       $( newEntry ).each(function(index, obj) {
@@ -233,39 +244,29 @@ var todoClass = (function() {
           console.log(newEntryFormatted);
       });
 
-      entries.push(newEntryFormatted);
-
+    
       newEntryFormatted.done = false;
       newEntryFormatted.id = idGenerator();
 
-      console.log(JSON.stringify(entries));
-
-      this.setEntries(entries);
-
-  }
-
-
-  todoClass.prototype.setEntries = function (entries) {
-
-    // Load into session
-    sessionStorage.setItem('todoListEntries', JSON.stringify(entries));
-
-    // and load copy to server
-    this.saveEntriesToServer(entries);
+      this.entries.push(newEntryFormatted);
+      
+      this.saveEntriesToServer();
 
   }
+
 
   // save The Entries to server
   todoClass.prototype.saveEntriesToServer = function () {
-      // Not yet learned :-D - do nothing
+
+      localStorage.setItem('todoListEntries', JSON.stringify(this.entries));
+
       console.log('es würde dann was auf den server laden :-)');
   }
 
 
   todoClass.prototype.getSingleEntry = function (id) {
-    var entries = this.loadEntries();
 
-    var entry = $.grep(entries,
+    var entry = $.grep(this.entries,
       function(element){
         return element.id == id;
       });
@@ -344,7 +345,3 @@ var todoClass = (function() {
   return todoClass;
 
 })(jQuery, window, document);
-
-// Kick off
-todo = new todoClass();
-todo.init();
