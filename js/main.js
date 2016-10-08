@@ -1,14 +1,19 @@
 /*
 
   todo
-  - addEntry
-    add id
+  - eintrag bearbeiten
+  - eintrag erledigt
+  - evtl. priorität-auswahl verbessern
+  - pflichtfelder
+  - today date vorauswählen
 
-- add triggers funktionieren nicht mehr, this konflikt?
+  - code allgemein verbessern
+  - timeline meldungen
 
-  this.showEntryForm(entryID);
+  - alle muss-Punkte erfüllt?
 
   - responsive
+  - schöneres styling
 
 */
 
