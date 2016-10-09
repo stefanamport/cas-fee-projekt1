@@ -7,6 +7,10 @@ $main-color: #30a30d;
 $main-gray: #f3f3f3;
 $main-gray-dark: darken(#f3f3f3, 20);
 
+$priority-color-1: #f75751;
+$priority-color-2: #fcb232;
+$priority-color-3: #55d347;
+
 $boxpadding: 10px;
 
 $middler: 500px;
@@ -22,13 +26,30 @@ body {
 
 .card {
 	padding: $boxpadding;
-	box-shadow: 0 0 5px rgba(0,0,0,.2);
+	box-shadow: 0 0 2px rgba(0,0,0,.5);
 
 	margin-bottom: 10px;
 
 	&.alert {
 
 	}
+
+	&.priority1,
+	&.priority2,
+	&.priority3 {
+		border-left: 3px solid #fff;
+	}
+	&.priority1 {
+		border-color: $priority-color-1;
+	}
+	&.priority2 {
+		border-color: $priority-color-2;
+	}
+	&.priority3 {
+		border-color: $priority-color-3;
+	}
+
+
 }
 
 h1 {
@@ -85,6 +106,12 @@ h1 {
 			background: $main-gray-dark;
 			color: #000;
 		}
+	}
+
+	&.btn-small {
+		font-size: 0.7em;
+		padding: 4px 10px;
+		display: none;
 	}
 }
 
@@ -253,6 +280,16 @@ main {
 		
 		transition: .4s all;
 
+		.triggers {
+			
+			text-align: right;
+
+			button {
+				display: inline-block;
+				margin-bottom: 3px;
+			}
+		}
+
 		&.done {
 			
 			opacity: .8;
@@ -338,7 +375,8 @@ form {
 		}
 	}
 
-	label {
+	label, 
+	.optgroup-desc {
 		display: block;
 		font-size: 0.8em;
 		width: 20%;
@@ -347,6 +385,53 @@ form {
 	.formrow {
 		margin-bottom: 10px;
 		display: flex;
+	}
+
+	.formrow.optgroup {
+
+		label {
+			width: auto;
+			margin-right: 20px;
+			line-height: 20px;
+
+			display: flex;
+			align-items: center;
+
+			cursor: pointer;
+		}
+
+		input {
+			width: auto;
+			display: inline;
+			margin-right: 10px;
+			display: none;
+		}
+
+		.priocolor {
+			content: "";
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+
+			opacity: .5;
+
+			&.prio1 {
+				background: $priority-color-1;
+			}
+			&.prio2 {
+				background: $priority-color-2;
+			}
+			&.prio3 {
+				background: $priority-color-3;
+			}
+		}
+
+		label input:checked + .priocolor {
+			box-shadow: 0 0 2px rgba(0,0,0,.5);
+			opacity: 1;
+
+		}
+
 	}
 
 	.submitarea {
@@ -443,20 +528,7 @@ form {
 					color: #fff;
 				}
 			}
-		}
-		
-		table {
 
-			th {
-				color: $girly-bright;
-				border-bottom-color: $girly-main;
-			}
-
-			tr {
-				&:nth-child(2n) {
-					background: $girly-bright;
-				}
-			}
 		}
 		
 		.filteroptionen, .todo-liste  {
@@ -479,9 +551,70 @@ form {
 
 	}
 
+
 @media screen and (max-width: 600px) {
+	
+	main {
+		margin-top: 30px;
+	}
+
+	/*
+
+	header {
+
+		position: fixed;
+		top: 0px;
+		left: 0px;
+
+		width: 100%;
+
+		border: 1px solid red;
+
+		.logo {
+			
+			position: relative;
+			top: 0;
+
+			display: inline-block;
+			
+			clip-path: none;
+			box-shadow: 1px 1px 0 rgba(0,0,0,.4);
+
+			width: auto;
+			height: auto;
+		
+		}
+
+		.subheader {
+
+			width: auto;
+
+			background: $main-gray;
+
+			border: 1px solid red;
+
+
+			.sub-rechts, .sub-links {
+				width: 50%;
+			}
+			.sub-rechts {
+
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+
+				.designwahl {
+					font-size: 0.7em;
+				}
+
+			}
+		}
+	}
+	*/
+
+
 	form {
-		input, textarea, label {
+		input, textarea, label, .optgroup-desc {
 			width: 100%;
 		}
 		.formrow {
@@ -490,6 +623,36 @@ form {
 		.submitarea {
 			padding-left: 0;
 			margin-top: 20px;
+		}
+	}
+
+	.grid {
+		display: flex;
+		flex-flow: row wrap;
+
+		.grelem {
+			box-sizing: border-box;
+			margin-bottom: 10px;
+
+			&:last-child {
+				margin-bottom: 0px;
+			}
+		}
+
+		.gr-1,
+		.gr-2 {
+			width: 100%;
+		}
+
+	}
+
+	#todo-entries {
+		.todo-entry {
+
+			.triggers {
+				
+				text-align: left;
+			}
 		}
 	}
 } 

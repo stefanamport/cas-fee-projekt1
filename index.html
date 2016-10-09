@@ -54,8 +54,8 @@
 				
 				<ul class="sorting">
 					<li><button class="btn btn-ghost active" data-sortby="todoDate" data-sortorder="ASC">nach Erledigungsdatum</button></li>
-					<li><button class="btn btn-ghost" data-sortby="id" data-sortorder="ASC">nach Erstellungsdatum</button></li>
-					<li><button class="btn btn-ghost" data-sortby="prioritaet" data-sortorder="DESC">nach Priorität</button></li>
+					<li><button class="btn btn-ghost" data-sortby="id" data-sortorder="DESC">nach Erstellungsdatum</button></li>
+					<li><button class="btn btn-ghost" data-sortby="prioritaet" data-sortorder="ASC">nach Priorität</button></li>
 				</ul>
 
 				<ul class="filters">
@@ -78,7 +78,15 @@
 		<script type='text/template' id='todoEntry'>
 			{{#if entries}}
 				{{#each entries}}
-					<div class="todo-entry card grid {{#if done}}done{{/if}}" data-id="{{id}}">
+					<div class="todo-entry card grid {{#if done}}done{{/if}} priority{{prioritaet}}" data-id="{{id}}">
+
+					    <div class="grelem gr-2 text">
+					    	<h2>{{todoTitle}}</h2>
+					    	<div class="longtext">
+					    	{{text}}
+					    	</div>
+					    </div>
+
 					    <div class="grelem gr-1 date">
 					    	{{#if doneDate}}
 								<div class="small">erledigt am {{formatDate doneDate "DD.MM.YYYY"}}</div>
@@ -88,21 +96,10 @@
 					    	{{/if}}
 					
 					    </div>
-					    <div class="priority grelem gr-1 priority" data-priority="{{prioritaet}}">
-					    	{{#for prioritaet}}
-								<span>!</span>	
-							{{/for}}
-					    </div>
-					    <div class="grelem gr-2 text">
-					    	<h2>{{todoTitle}}</h2>
-					    	<div class="longtext">
-					    	{{text}}
-					    	</div>
-					    </div>
 
-						<div class="grelelem gr-auto triggers">
-					    	<button class="btn entryDone">erledigt</button>
-					    	<button class="btn btn-ghost entryEdit">bearbeiten</button>
+						<div class="grelem gr-1 triggers">
+					    	<button class="btn btn-small entryDone">erledigt</button>
+					    	<button class="btn btn-small btn-ghost entryEdit">bearbeiten</button>
 					    </div>
 
 					</div>
@@ -128,13 +125,26 @@
 					<label for="text">Text</label>
 					<textarea rows="4" id="text" name="text">{{entry.text}}</textarea>
 				</div>
-				<div class="formrow">
-					<label for="prioritaet">Priorität TODO</label>
-					 <select name="prioritaet" id="prioritaet">
-					      <option value="1">!</option>
-					      <option value="2">!!</option>
-					      <option value="3">!!!</option>
-					    </select>
+				<div class="formrow optgroup prioritaeten">
+					<div class="optgroup-desc">
+						Priorität
+					</div>
+					<label>
+						<input type="radio" value="3" name="prioritaet" checked>
+						<div class="priocolor prio3"></div>
+					</label>
+
+					<label>
+						<input type="radio" value="2" name="prioritaet">
+						<div class="priocolor prio2"></div>
+					</label>
+
+					<label>
+						<input type="radio" value="1" name="prioritaet">
+						<div class="priocolor prio1"></div>
+					</label>
+					
+
 				</div>
 				<div class="formrow">
 					<label for="todoDate">zu erledigen bis</label>
