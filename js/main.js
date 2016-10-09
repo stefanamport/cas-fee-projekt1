@@ -2,7 +2,6 @@
 
   todo
   - evtl. priorität-auswahl verbessern
-  - pflichtfelder
   - today date vorauswählen
 
   - code allgemein verbessern
