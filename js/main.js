@@ -2,7 +2,7 @@
 
   todo
   - evtl. priorität-auswahl verbessern
-  - today date vorauswählen
+
 
   - code allgemein verbessern
   - timeline meldungen
@@ -179,7 +179,6 @@ var todoClass = (function() {
 
     });
 
-
     // Sorting
 
     if (sortorder == "ASC") {
@@ -253,11 +252,7 @@ var todoClass = (function() {
 
         var eID  = this.getSingleEntry(newEntryFormatted.id, true);
 
-        //console.log(newEntryFormatted.length);
-
         for (var key in newEntryFormatted) {
-          //console.log(key + " -> " + newEntryFormatted[key]);
-          console.log(this.entries[eID][key]);
           this.entries[eID][key] = newEntryFormatted[key];
         }
 
@@ -382,9 +377,7 @@ var todoClass = (function() {
     }
 
     entrydates.today = getToday();
-
-    console.log(entrydates);
-
+  
     var source   = $("#newNoteForm").html();
     var template = Handlebars.compile(source);
     var wrapper  = {entry: entrydates};
