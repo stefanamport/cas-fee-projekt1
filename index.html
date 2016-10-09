@@ -111,13 +111,16 @@
 		<script type='text/template' id='newNoteForm'>
 			
 			<form id="newEntry">
+
+				<input type="hidden" id="id" name="id" value="{{entry.id}}">
+
 				<div class="formrow">
 					<label for="todoDate">Titel</label>
 					<input type="text" id="todoTitle" name="todoTitle" value="{{entry.todoTitle}}"/>
 				</div>
 				<div class="formrow">
 					<label for="text">Text</label>
-					<textarea rows="4" id="text" name="text">{{entry.todoText}}</textarea>
+					<textarea rows="4" id="text" name="text">{{entry.text}}</textarea>
 				</div>
 				<div class="formrow">
 					<label for="prioritaet">Priorität TODO</label>

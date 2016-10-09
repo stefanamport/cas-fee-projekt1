@@ -1,7 +1,6 @@
 /*
 
   todo
-  - eintrag bearbeiten
   - evtl. priorität-auswahl verbessern
   - pflichtfelder
   - today date vorauswählen
@@ -251,11 +250,30 @@ var todoClass = (function() {
           newEntryFormatted[obj.name] = obj.value;
       });
 
-    
-      newEntryFormatted.done = false;
-      newEntryFormatted.id = idGenerator();
+      console.log();
 
-      this.entries.push(newEntryFormatted);
+      if (newEntryFormatted.id) {
+        // update entry
+
+        var eID  = this.getSingleEntry(newEntryFormatted.id, true);
+
+        //console.log(newEntryFormatted.length);
+
+        for (var key in newEntryFormatted) {
+          //console.log(key + " -> " + newEntryFormatted[key]);
+          console.log(this.entries[eID][key]);
+          this.entries[eID][key] = newEntryFormatted[key];
+        }
+
+        
+      } else {
+        // new Entry
+        newEntryFormatted.done = false;
+        newEntryFormatted.id = idGenerator();
+        this.entries.push(newEntryFormatted);
+      }
+
+      
       
       this.saveEntriesToServer();
 
@@ -329,8 +347,6 @@ var todoClass = (function() {
       event.preventDefault();
 
       self.addEntry($( this ).serializeArray());
-
-      
 
       self.closeForm();
       self.displayEntries();
