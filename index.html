@@ -76,6 +76,7 @@
 		</main>
 
 		<script type='text/template' id='todoEntry'>
+			{{#if entries}}
 				{{#each entries}}
 					<div class="todo-entry card grid {{#if done}}done{{/if}}" data-id="{{id}}">
 					    <div class="grelem gr-1 date">
@@ -106,6 +107,11 @@
 
 					</div>
 				{{/each}}
+			{{else}}
+				<div class="card alert">
+				Keine ToDo's heute. Grossartig :-)
+				</div>
+			{{/if}}
 		</script>
 
 		<script type='text/template' id='newNoteForm'>
