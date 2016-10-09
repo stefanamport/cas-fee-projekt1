@@ -2,7 +2,6 @@
 
   todo
   - eintrag bearbeiten
-  - eintrag erledigt
   - evtl. priorität-auswahl verbessern
   - pflichtfelder
   - today date vorauswählen
@@ -17,19 +16,25 @@
 
 */
 
-// evtl. benötigt??
-Array.prototype.findByID = function(id) {
-    for(var i = 0; i< this.length; ++i) {
-        if( this[i].id == id)
-        {
-            return this[i];
-        }
-    }
-};
 
 function idGenerator() {
     return Math.floor(Math.random() * 10) + Date.now();
 };
+
+function getToday (){
+
+  var today = new Date();
+
+  var today = new Date();
+  var tag = today.getDate();
+  var monat = today.getMonth()+1;
+  var jahr = today.getFullYear();
+
+  var todayFormatted = jahr + "-" + monat + "-" + tag;
+
+  return todayFormatted;
+
+}
 
 // Handlebar extension "for"
 Handlebars.registerHelper('for', function(fortimes, tpl) {
@@ -88,8 +93,6 @@ $(function(){
     // Kick off
     todo = new todoClass();
     todo.displayEntries();
-    console.log(todo.entries);
-
 });
 
 
@@ -246,7 +249,6 @@ var todoClass = (function() {
       var newEntryFormatted = {};
       $( newEntry ).each(function(index, obj) {
           newEntryFormatted[obj.name] = obj.value;
-          console.log(newEntryFormatted);
       });
 
     
@@ -268,15 +270,50 @@ var todoClass = (function() {
       console.log('es würde dann was auf den server laden :-)');
   }
 
+  todoClass.prototype.doneEntry = function (id) {
 
-  todoClass.prototype.getSingleEntry = function (id) {
+    var entryID = this.getSingleEntry(id, true);
 
-    var entry = $.grep(this.entries,
+    // nicht ganz entfernen :-)
+    //this.entries.splice(entryID, 1);
+
+    this.entries[entryID].done = true;
+    this.entries[entryID].doneDate = getToday();
+    this.saveEntriesToServer();
+
+    // for DOM Animation
+    $('.todo-entry[data-id="'+id+'"]').addClass('done doneAnimation');
+
+  }
+
+
+  todoClass.prototype.getSingleEntry = function (id, returnIndex = false) {
+
+    var output = false;
+
+    if (returnIndex) {
+      // Return the Index in this.entries array
+
+        for(var i = 0; i< this.entries.length; ++i) {
+            if( this.entries[i].id == id)
+            {
+                output = i;
+            }
+        }
+
+    } else {
+      // returns the entry itself as a new array
+
+      var entry = $.grep(this.entries,
       function(element){
         return element.id == id;
       });
 
-    return entry[0];
+      output = entry[0];
+
+    }
+
+    return output;
   }
 
 
@@ -290,8 +327,6 @@ var todoClass = (function() {
     $( "form#newEntry" ).submit(function( event ) {
 
       event.preventDefault();
-
-      console.log($( this ).serializeArray());
 
       self.addEntry($( this ).serializeArray());
 
@@ -314,7 +349,8 @@ var todoClass = (function() {
     var self = this;
 
     $('button.entryDone').on('click', function(){
-      //todo - editEntry();
+       var entryID = $(this).parents('.todo-entry').data('id');
+      self.doneEntry(entryID);
     });
 
     $('button.entryEdit').on('click', function(){

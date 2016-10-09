@@ -78,21 +78,28 @@
 		<script type='text/template' id='todoEntry'>
 				{{#each entries}}
 					<div class="todo-entry card grid {{#if done}}done{{/if}}" data-id="{{id}}">
-					    <div class="grelem gr-1">
-					    	<div class="small">zu erledigen bis:</div>
-					    	{{formatDate todoDate "DD.MM.YYYY"}}
+					    <div class="grelem gr-1 date">
+					    	{{#if doneDate}}
+								<div class="small">erledigt am {{formatDate doneDate "DD.MM.YYYY"}}</div>
+					    	{{else}}
+								<div class="small">zu erledigen bis:</div>
+					    		{{formatDate todoDate "DD.MM.YYYY"}}
+					    	{{/if}}
+					
 					    </div>
-					    <div class="priority grelem gr-1" data-priority="{{prioritaet}}">
+					    <div class="priority grelem gr-1 priority" data-priority="{{prioritaet}}">
 					    	{{#for prioritaet}}
 								<span>!</span>	
 							{{/for}}
 					    </div>
-					    <div class="grelem gr-2">
+					    <div class="grelem gr-2 text">
 					    	<h2>{{todoTitle}}</h2>
+					    	<div class="longtext">
 					    	{{text}}
+					    	</div>
 					    </div>
 
-						<div class="grelelem gr-auto">
+						<div class="grelelem gr-auto triggers">
 					    	<button class="btn entryDone">erledigt</button>
 					    	<button class="btn btn-ghost entryEdit">bearbeiten</button>
 					    </div>

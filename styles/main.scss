@@ -247,8 +247,59 @@ main {
 #todo-entries {
 	.todo-entry {
 		
+		transition: .4s all;
+
 		&.done {
-			opacity: .5;
+			
+			opacity: .8;
+
+			.priority, .text .longtext, .triggers {
+				display: none;
+			}
+
+			.date {
+				order: 2;
+			}
+
+			.text {
+				order: 1;
+
+				position: relative;
+				padding-left: 15px;
+				margin-bottom: 0px;
+
+				&:before, &:after {
+					display: block;
+					content: "";
+					height: 2px;
+
+					background: $main-color;
+
+					position: absolute;
+				}
+
+				&:before {
+					top: 7px;
+					left: 0px;
+					width: 15px;
+					transform: rotate(-60deg);
+				}
+				&:after {
+					top: 10px;
+					left: -2px;
+					width: 7px;
+					transform: rotate(40deg);
+				}
+			}
+			
+		}
+
+		&.doneAnimation {
+			// Optionale animation?
+
+			.date {
+				display: none;
+			}
 		}
 
 		> div {
