@@ -24,14 +24,13 @@ function getToday (){
   var today = new Date();
 
   var today = new Date();
-  var tag = today.getDate();
-  var monat = today.getMonth()+1;
+  var tag = ('0' + today.getDate()).slice(-2);
+  var monat = ('0' + (today.getMonth()+1)).slice(-2);
   var jahr = today.getFullYear();
 
   var todayFormatted = jahr + "-" + monat + "-" + tag;
 
   return todayFormatted;
-
 }
 
 // Handlebar extension "for"
@@ -249,8 +248,6 @@ var todoClass = (function() {
           newEntryFormatted[obj.name] = obj.value;
       });
 
-      console.log();
-
       if (newEntryFormatted.id) {
         // update entry
 
@@ -377,11 +374,16 @@ var todoClass = (function() {
 
   // Show the Entry Form as Lightbox
   todoClass.prototype.showEntryForm = function (id) {
+    
     var entrydates = [];
 
     if (id>0) {
       var entrydates = this.getSingleEntry(id);
     }
+
+    entrydates.today = getToday();
+
+    console.log(entrydates);
 
     var source   = $("#newNoteForm").html();
     var template = Handlebars.compile(source);
