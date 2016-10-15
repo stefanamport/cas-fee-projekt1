@@ -30,9 +30,7 @@ body {
 
 	margin-bottom: 10px;
 
-	&.alert {
-
-	}
+	position: relative;
 
 	&.priority1,
 	&.priority2,
@@ -49,6 +47,13 @@ body {
 		border-color: $priority-color-3;
 	}
 
+	&.abgelaufen {
+		// background: $main-gray;
+
+		.date {
+			color: $priority-color-1;
+		}
+	}
 
 }
 
@@ -404,7 +409,9 @@ form {
 			width: auto;
 			display: inline;
 			margin-right: 10px;
-			display: none;
+
+			position: absolute;
+			opacity: 0;
 		}
 
 		.priocolor {
@@ -413,7 +420,7 @@ form {
 			width: 20px;
 			height: 20px;
 
-			opacity: .5;
+			opacity: .3;
 
 			&.prio1 {
 				background: $priority-color-1;
@@ -425,10 +432,15 @@ form {
 				background: $priority-color-3;
 			}
 		}
+		
+		label input:focus:checked + .priocolor {
+			box-shadow: 0 0 2px rgba(0,0,0,1);
+			opacity: 1;
+		}
 
 		label input:checked + .priocolor {
 			box-shadow: 0 0 2px rgba(0,0,0,.5);
-			opacity: 1;
+			opacity: .9;
 
 		}
 

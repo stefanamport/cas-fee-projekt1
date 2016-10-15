@@ -53,9 +53,10 @@
 			<div class="filteroptionen">
 				
 				<ul class="sorting">
-					<li><button class="btn btn-ghost active" data-sortby="todoDate" data-sortorder="ASC">nach Erledigungsdatum</button></li>
-					<li><button class="btn btn-ghost" data-sortby="id" data-sortorder="DESC">nach Erstellungsdatum</button></li>
-					<li><button class="btn btn-ghost" data-sortby="prioritaet" data-sortorder="ASC">nach Priorität</button></li>
+					<li><button class="btn btn-ghost active" data-sortby="todoDate">nach Erledigungsdatum</button></li>
+					<li><button class="btn btn-ghost" data-sortby="id">nach Erstellungsdatum</button></li>
+					<li><button class="btn btn-ghost" data-sortby="prioritaet">nach Priorität</button></li>
+					<li><button class="btn btn-ghost sortorder asc" data-sortorder="ASC">&darr;</button></li>
 				</ul>
 
 				<ul class="filters">
@@ -78,7 +79,7 @@
 		<script type='text/template' id='todoEntry'>
 			{{#if entries}}
 				{{#each entries}}
-					<div class="todo-entry card grid {{#if done}}done{{/if}} priority{{prioritaet}}" data-id="{{id}}">
+					<div class="todo-entry card grid {{#if done}}done{{/if}} priority{{prioritaet}} {{#if abgelaufen}}abgelaufen{{/if}}" data-id="{{id}}">
 
 					    <div class="grelem gr-2 text">
 					    	<h2>{{todoTitle}}</h2>
@@ -92,7 +93,7 @@
 								<div class="small">erledigt am {{formatDate doneDate "DD.MM.YYYY"}}</div>
 					    	{{else}}
 								<div class="small">zu erledigen bis:</div>
-					    		{{formatDate todoDate "DD.MM.YYYY"}}
+					    		{{#if abgelaufen}}<span class="emoji">💩</span>{{/if}} {{formatDate todoDate "DD.MM.YYYY"}}
 					    	{{/if}}
 					
 					    </div>
@@ -126,6 +127,7 @@
 					<textarea rows="4" id="text" name="text">{{entry.text}}</textarea>
 				</div>
 				<div class="formrow optgroup prioritaeten">
+
 					<div class="optgroup-desc">
 						Priorität
 					</div>
@@ -162,7 +164,8 @@
 		<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
 		<script src="js/moment.min.js" ></script>
 		<script src="js/handlebars.min.js" ></script>
-		<script src="js/main.js" ></script>
+		<script src="js/handlebars-helpers.js" ></script>
+		<script src="js/main-new.js" ></script>
 
 
 	</body>

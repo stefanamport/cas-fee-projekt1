@@ -1,8 +1,6 @@
 /*
 
   todo
-  - evtl. priorität-auswahl verbessern
-
 
   - code allgemein verbessern
   - timeline meldungen
@@ -12,67 +10,54 @@
   - responsive
   - schöneres styling
 
+  - todoClass.prototype.displayEntries sind alle public, welche müssen am schluss ausgegeben werden?
+     return {
+        addLion : publicAddLion,
+        addPanda : publicAddPanda,
+        getAll : publicGetAll
+    };
+
+
+
 */
 
+  // Allgemeine Funktionen & Module
 
-function idGenerator() {
-    return Math.floor(Math.random() * 10) + Date.now();
-};
+  // Entries auslagern ? 
+  /*
+     var entries = (function() {    
+        
+         function Entry() {
+            this.isDone = false;
+            this.id = "";
+            this.xxx = [];
+        }
 
-function getToday (){
+        Entry.prototype.done = function(){
+          this.isDone = true;
+        }
+      })();
+    */
 
-  var today = new Date();
 
-  var today = new Date();
-  var tag = ('0' + today.getDate()).slice(-2);
-  var monat = ('0' + (today.getMonth()+1)).slice(-2);
-  var jahr = today.getFullYear();
-
-  var todayFormatted = jahr + "-" + monat + "-" + tag;
-
-  return todayFormatted;
-}
-
-// Handlebar extension "for"
-Handlebars.registerHelper('for', function(fortimes, tpl) {
-    var output = '';
-    for(var i = 0; i < fortimes; ++i)
-        output += tpl.fn(i);
-    return output;
-});
-
-Handlebars.registerHelper("formatDate", function(date, format) {
-
-    if (moment && date.length > 1) {
-      // can use other formats like 'lll' too
-      
-      var strippedDate = date.replace("/-/g", "");
-
-      return moment(strippedDate).format(format);
-    }
-    else {
-      return date;
-    }
-
-});
 
 
 $(function(){
 
- // General Triggers
+   // General Triggers
    $('#design').on('change', function(){
    		var designname = $(this).find("option:selected").val();
-      $('body').addClass(designname);
+     $('body').addClass(designname);
 
-      // inaktive Design Klassen entfernen
-      $(this).find('option').not(':selected').each(function(){
-        $('body').removeClass($(this).val());
-      });
+     // inaktive Design Klassen entfernen
+     $(this).find('option').not(':selected').each(function(){
+         $('body').removeClass($(this).val());
+     });
    });
 
-    $('#showEntryForm').on('click', function(){
-      todo.showEntryForm();
-    });
+   $('#showEntryForm').on('click', function(){
+     todo.showEntryForm();
+   });
 
     // Sorting / Filtering
     $('.sorting button').on('click', function(){
@@ -97,6 +82,16 @@ $(function(){
 
 
 // The Todo Class
+// umbenennen? TodoEntries ?
+// objekt "entry" innerhalb erstellen
+// objekt "entry list" innerhalb erstellen?
+
+// z.B.
+// entry = new entry(done, date, text);
+// entryList.addEntry(entry);
+
+
+
 
 var todoClass = (function() {
   

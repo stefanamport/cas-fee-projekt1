@@ -4,9 +4,7 @@
   "description": "Note Tool",
   "main": "gulpfile.js",
   "dependencies": {
-    "browser-sync": "^2.16.0",
-    "font-awesome": "^4.6.3",
-    "fontawesome": "^4.5.0",
+    "browser-sync": "^2.16.0",x
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-clean": "^0.3.2",
