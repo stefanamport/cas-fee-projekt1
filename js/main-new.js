@@ -234,15 +234,23 @@ var toDoDesign = (function() {
 	// Publics
 	function displayEntries (){
 
+		var entries = sortFilterEntries(toDo.entries());
+
 	    var source   = $("#todoEntry").html();
 
 	    var template = Handlebars.compile(source);
-	    var wrapper  = {entries: sortFilterEntries(toDo.entries())};
+	    var wrapper  = {entries: entries};
 
 	    $('#todo-entries').html(template(wrapper));
 	    addListTriggers();
 
-	    //toDo.entries();
+	    if (entries.length > 1){
+	    	$('.filteroptionen .sorting button').attr("disabled", false);
+	    } else {
+	    	$('.filteroptionen .sorting button').attr("disabled", true);
+	    }
+
+
     }
 
     // Show the Entry Form as Lightbox
