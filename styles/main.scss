@@ -322,14 +322,29 @@ main {
 				display: inline-block;
 				margin-bottom: 3px;
 			}
+
+			.entryUndone {
+				display: none;
+			}
 		}
 
 		&.done {
 			
 			opacity: .8;
 
-			.priority, .text .longtext, .triggers {
+			.priority, .text .longtext {
 				display: none;
+			}
+
+			.triggers {
+				order: 3;
+
+				.entryDone, .entryEdit {
+					display: none;
+				}
+				.entryUndone {
+					display: inline-block;
+				}
 			}
 
 			.date {
@@ -373,7 +388,7 @@ main {
 			// Optionale animation?
 
 			.date {
-				display: none;
+				opacity: 0;
 			}
 		}
 
@@ -524,6 +539,7 @@ form {
 		color: $girly-dark;
 
 		padding-bottom: 200px;
+
 
 		&:after {
 			content: "";

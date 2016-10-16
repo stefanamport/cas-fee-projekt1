@@ -1,8 +1,8 @@
 /*
 	todo
-	- abgelaufene einträge auffälliger markieren
+	- objekt selektierung ohne id möglich?
 
-	 - responsive
+	- responsive
   	- schöneres styling
 
   - code allgemein verbessern
@@ -148,18 +148,15 @@ var toDoDesign = (function() {
 	 // Triggers for adding after handlebars
     function addListTriggers () {
 
-	    // To Ask - Ist das sauber?
-	    var self = this;
+	    $('button.entryDone, button.entryUndone').on('click', function(){
+	      var entryID = $(this).parents('.todo-entry').data('id');
 
-	    $('button.entryDone').on('click', function(){
-	       var entryID = $(this).parents('.todo-entry').data('id');
-
-	      toDo.setToDone(entryID);
+	      toDo.toggleDone(entryID);
 	      
-	      $('.todo-entry[data-id="'+entryID+'"]').addClass('done doneAnimation');
-
+	      $('.todo-entry[data-id="'+entryID+'"]').toggleClass('done doneAnimation');
 
 	    });
+	    
 
 	    $('button.entryEdit').on('click', function(){
 
@@ -186,6 +183,12 @@ var toDoDesign = (function() {
 	    $( "form #closeForm, .lightbox .overlay" ).on('click', function( ) {
 	      closeForm();
 	    });
+
+	    $('body').keydown(function(key){
+		    if (key.which == 27) {
+		        closeForm();
+		    }
+		});
 
 	    $('form input[type="text"]').first().focus();
 
@@ -311,19 +314,17 @@ var toDo  = (function() {
 
 	}
 
-	Entry.prototype.setToDone = function () {
+	Entry.prototype.toggleDone = function () {
 
-	    //var entryID = this.getSingleEntry(id, true);
-
-	    // nicht ganz entfernen :-)
-	    //this.entries.splice(entryID, 1);
-
-	    this.done = true;
-	    this.doneDate = getToday();
+	    if (this.done){
+	    	this.done = false;
+	    	this.doneDate = "";
+	    } else {
+	    	this.done = true;
+	    	this.doneDate = getToday();
+	    }
+	    
 	    saveEntriesToServer();
-
-	    // for DOM Animation
-	    return true;
 
 	}
 
@@ -387,6 +388,8 @@ var toDo  = (function() {
 
 	function saveEntriesToServer () {
 
+		console.log(entries);
+
       localStorage.setItem('todoListEntries', JSON.stringify(entries));
 
       console.log('es würde dann was auf den server laden :-)');
@@ -448,19 +451,18 @@ var toDo  = (function() {
 
 	}
 
-	function publicSetToDone(entryID) {
+	function publicToggleDone(entryID) {
 
-		entry = getEntryByID(entryID);
+			entry = getEntryByID(entryID);
 
-		entry.setToDone();
-
+			entry.toggleDone();
 	}
 
 
 	return {
        entries : publicOutputEntries,
        singleEntry : getEntryByID,
-       setToDone : publicSetToDone,
+       toggleDone : publicToggleDone,
 
        addEntryForm : publicAddChangeEntryFromForm,
 
