@@ -423,10 +423,14 @@ form {
 
 		font-family: $main-font-family;
 
-		&:focus {
+		&:focus, &:focus:invalid {
 			outline: 0px;
 			border-bottom: 2px solid $main-color;
 			color: #000;
+		}
+
+		&:invalid {
+			border-bottom-color: $priority-color-1;
 		}
 	}
 

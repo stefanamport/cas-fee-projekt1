@@ -1,6 +1,7 @@
 /*
 	todo
 	- objekt selektierung ohne id möglich?
+	- sortierfunktion im safari??
 
 	- responsive
   	- schöneres styling
