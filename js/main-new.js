@@ -1,10 +1,22 @@
 /*
 	todo
+	- express & nedb als Datenspeicher nutzen
+	  User Identifizierung?
+	  Userverwaltung, Token JWT?
+
+	  $.ajax({
+			method: "POST", url: "/helloWorld", data: { name: "Michael" }
+		}).done(function( msg ) {
+			alert( "Data Saved: " + msg );
+	  });
+
 	- objekt selektierung ohne id möglich?
 	- sortierfunktion im safari??
+	- code in mehrere files aufsplitten?
+	- 
 
 	- responsive
-  	- schöneres styling
+	- w3c validating
 
   - code allgemein verbessern
   - timeline meldungen
@@ -52,7 +64,6 @@
 
 	    		console.log($(this).data('sortorder'));
 	    		
-
 	    	} else {
 	    		$('.sorting button').removeClass('active');
 	      		$(this).addClass('active');
@@ -70,14 +81,13 @@
 		// Initial Show Entries
 		toDoDesign.displayEntries();
 
-
     });
 
 })(jQuery, window, document);
 
 
 
-/**************/
+/* Output/Design related Methods *************/
 
 var toDoDesign = (function() {
 
@@ -290,8 +300,8 @@ var toDoDesign = (function() {
 
 })();
 
-/**************/
 
+/* Functional / Entry Database related Methods *************/
 
 var toDo  = (function() {
 
@@ -418,8 +428,6 @@ var toDo  = (function() {
 	    return output;
 
 	}
-
-	
 
 	function addEntry (values){
 
