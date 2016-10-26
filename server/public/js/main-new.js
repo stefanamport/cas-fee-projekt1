@@ -4,11 +4,17 @@
 	- sortierfunktion im safari??
 
 	- evtl. einträge pro user abspeichern? token jwt?
+
+	- Express server & gulp?
 	
 	HTML/CSS
 	- responsive
 	- w3c validating
 
+	Struktur / JS
+	- Libraries: "lib"- oder "frameworks"-Ordner erstellen für fremden Code und Bibliotheken, sodass sofort ersichtlich ist, welche Bibliotheken eingebunden wurden und welcher Code von euch selber stammt.
+	- Handlebars-Helpers: Besser in einem eigenen JS-File definieren -> nicht irgendwo mitten im Applikationscode definieren.
+	- Immer 'use strict'; benutzen.
 
   - alle muss-Punkte erfüllt?
 
@@ -290,7 +296,7 @@ var toDoDesign = (function() {
 })();
 
 
-/* Functional / Entry Database related Methods *************/
+/* Functional / Entry-Database related Methods *************/
 
 var toDo  = (function() {
 

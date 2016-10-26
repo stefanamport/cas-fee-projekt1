@@ -36,11 +36,9 @@
       <file leaf-file-name="entryDatabase.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/services/entryDatabase.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-              <folding>
-                <marker date="1477412633000" expanded="true" signature="917:928" ph="{...}" />
-              </folding>
+            <state relative-caret-position="180">
+              <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -255,11 +253,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/services/entryDatabase.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-          <folding>
-            <marker date="1477412633000" expanded="true" signature="917:928" ph="{...}" />
-          </folding>
+        <state relative-caret-position="180">
+          <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
