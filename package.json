@@ -4,7 +4,8 @@
   "description": "Note Tool",
   "main": "gulpfile.js",
   "dependencies": {
-    "browser-sync": "^2.16.0",x
+    "browser-sync": "^2.16.0",
+    "express": "^4.14.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-clean": "^0.3.2",

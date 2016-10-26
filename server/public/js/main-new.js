@@ -1,25 +1,14 @@
 /*
-	todo
-	- express & nedb als Datenspeicher nutzen
-	  User Identifizierung?
-	  Userverwaltung, Token JWT?
-
-	  $.ajax({
-			method: "POST", url: "/helloWorld", data: { name: "Michael" }
-		}).done(function( msg ) {
-			alert( "Data Saved: " + msg );
-	  });
-
-	- objekt selektierung ohne id möglich?
+	todo:
+	- selbst generierte entry.id durch nedb id ablösen
 	- sortierfunktion im safari??
-	- code in mehrere files aufsplitten?
-	- 
 
+	- evtl. einträge pro user abspeichern? token jwt?
+	
+	HTML/CSS
 	- responsive
 	- w3c validating
 
-  - code allgemein verbessern
-  - timeline meldungen
 
   - alle muss-Punkte erfüllt?
 
@@ -62,7 +51,6 @@
 	    			$(this).data('sortorder', 'DESC');
 	    		}
 
-	    		console.log($(this).data('sortorder'));
 	    		
 	    	} else {
 	    		$('.sorting button').removeClass('active');
@@ -86,13 +74,12 @@
 })(jQuery, window, document);
 
 
-
 /* Output/Design related Methods *************/
 
 var toDoDesign = (function() {
 
 	function test (){
-		console.log(toDo.entries())
+		console.log(toDo.entries());
 	}
 
 	function sortFilterEntries (entries) {
@@ -216,10 +203,8 @@ var toDoDesign = (function() {
 	}
 
 	 
-
-
      
-
+	/* UNUSED...
 	  function formSubmit(newEntryFromForm) {
 
 	  	  var newEntryFormatted = {};
@@ -240,10 +225,13 @@ var toDoDesign = (function() {
 	      }
 
 	  }
+	  */
 
 
 	// Publics
 	function displayEntries (){
+
+		$("#todo-entries").addClass('loading');
 
 		var entries = sortFilterEntries(toDo.entries());
 
@@ -261,6 +249,7 @@ var toDoDesign = (function() {
 	    	$('.filteroptionen .sorting button').attr("disabled", true);
 	    }
 
+	    $("#todo-entries").removeClass('loading');
 
     }
 
@@ -305,7 +294,9 @@ var toDoDesign = (function() {
 
 var toDo  = (function() {
 
-	var entries = getEntriesFromServer();
+	//loadEntries
+	entries = [];
+	getEntriesFromServer();
 
 	// Entry Prototype
 	function Entry(settings){
@@ -335,38 +326,68 @@ var toDo  = (function() {
 
 	Entry.prototype.toggleDone = function () {
 
+		var doneValues = {};
+
 	    if (this.done){
-	    	this.done = false;
-	    	this.doneDate = "";
+	    	doneValues = {
+	    		"done" : false,
+	    		"doneDate" : ""
+	    	};
 	    } else {
-	    	this.done = true;
-	    	this.doneDate = getToday();
+	    	doneValues = {
+	    		"done" : true,
+	    		"doneDate" : getToday()
+	    	};
 	    }
 	    
-	    saveEntriesToServer();
-
+	    this.updateEntry(doneValues);
 	}
 
 	Entry.prototype.updateEntry = function (changedValues){
 
 		var entryObject = this;
 
+		/*
 		$.each( changedValues, function( key, value ) {
-			console.log(entryObject[key]);
 			entryObject[key] = value;
-
+			console.log(entryObject[key]);
 		});
+		*/
 
-		saveEntriesToServer();
+		// Update in Object
+	    for (var atr in changedValues) {
+	    	this[atr] = changedValues[atr];
+	    }
+
+	    
+
+	    postBody = {"values" : JSON.stringify(this)};
+
+		// Push new Objects to Server
+		this.updateThisOnServer();
+
+	}
+
+	
+
+	Entry.prototype.updateThisOnServer = function  (){
+		
+		postBody = {"values" : JSON.stringify(this)};
+
+		$.post( "/entries/"+ this['_id'] + "/update" , postBody ,function( NewEntry ) {
+			
+		});
 
 	}
 
 
 	// Intern Methods / Functions
+	
 
 	function idGenerator() {
 	    return Math.floor(Math.random() * 10) + Date.now();
 	};
+
 
 	// Global Namespace Methods
 	function getToday (){
@@ -385,33 +406,46 @@ var toDo  = (function() {
 
 
 	function getEntriesFromServer (){
-		if (localStorage.getItem('todoListEntries')) {
-	      var entries = JSON.parse(localStorage.getItem('todoListEntries'));
-	    } else {
-	      var entries = new Array();
-	    }
 
-	    // make a "Entry" Object from each entry
-	    var objEntries = [];
+		// Get Entries from Express Server
 
-	    $.each( entries, function( key, value ) {
+		var entries = [];
 
-	    	var NewEntry = new Entry(value);
+		$.get( "/entries", function( data ) {
 
-	    	objEntries.push(NewEntry);
+		  var entries = JSON.parse(data);
+
+		  // make a "Entry" Object from each entry
+		    var objEntries = [];
+
+		    $.each( entries, function( key, value ) {
+
+		    	var NewEntry = new Entry(value);
+
+		    	objEntries.push(NewEntry);
+
+			});
+
+			setEntriesToLocal(objEntries);
 
 		});
-
-	    return objEntries;
+	    
 	}
 
-	function saveEntriesToServer () {
+	function setEntriesToLocal(objEntries){
+		this.entries = objEntries;
+		
+	}
 
-		console.log(entries);
 
-      localStorage.setItem('todoListEntries', JSON.stringify(entries));
+	function newEntryToServer (NewEntry){
 
-      console.log('es würde dann was auf den server laden :-)');
+		var postBody = {'values' : JSON.stringify(NewEntry)};
+
+		$.post( "/entries", postBody ,function( NewEntry ) {
+			
+		});
+
 	}
 
 	
@@ -431,10 +465,11 @@ var toDo  = (function() {
 
 	function addEntry (values){
 
-		NewEntry = new Entry(values);
+		var newEntry = new Entry(values);
 
-		entries.push(NewEntry);
-		saveEntriesToServer();
+		this.entries.push(newEntry);
+
+		newEntryToServer(newEntry);
 
 	}
 
@@ -456,15 +491,12 @@ var toDo  = (function() {
 	      if (newEntryFormatted.id) {
 	        
 	        entry = toDo.singleEntry(newEntryFormatted.id);
-
 	        entry.updateEntry(newEntryFormatted);
 	        
 	      } else {
 	        // new Entry
 	        addEntry(newEntryFormatted);
 	      }
-
-	      
 
 	}
 
