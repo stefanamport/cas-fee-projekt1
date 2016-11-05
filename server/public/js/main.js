@@ -1,11 +1,7 @@
 /*
 	todo:
 	- Express server & gulp?
-
 	- Installationsanleitung
-	
-	HTML/CSS
-	- w3c validating
 
 	Struktur / JS
 	- Libraries: "lib"- oder "frameworks"-Ordner erstellen für fremden Code und Bibliotheken, sodass sofort ersichtlich ist, welche Bibliotheken eingebunden wurden und welcher Code von euch selber stammt.
