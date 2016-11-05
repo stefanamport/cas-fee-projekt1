@@ -1,11 +1,10 @@
 /*
 	todo:
-	- selbst generierte entry.id durch nedb id ablösen
-	- sortierfunktion im safari??
-
-	- evtl. einträge pro user abspeichern? token jwt?
-
 	- Express server & gulp?
+
+	- Installationsanleitung
+
+	- favicon
 	
 	HTML/CSS
 	- responsive
@@ -83,10 +82,6 @@
 /* Output/Design related Methods *************/
 
 var toDoDesign = (function() {
-
-	function test (){
-		console.log(toDo.entries());
-	}
 
 	function sortFilterEntries (entries) {
 
@@ -237,8 +232,6 @@ var toDoDesign = (function() {
 	// Publics
 	function displayEntries (){
 
-		$("#todo-entries").addClass('loading');
-
 		var entries = sortFilterEntries(toDo.entries());
 
 	    var source   = $("#todoEntry").html();
@@ -255,8 +248,6 @@ var toDoDesign = (function() {
 	    	$('.filteroptionen .sorting button').attr("disabled", true);
 	    }
 
-	    $("#todo-entries").removeClass('loading');
-
     }
 
     // Show the Entry Form as Lightbox
@@ -264,7 +255,7 @@ var toDoDesign = (function() {
 	    
 	    var entrydates = [];
 
-	    if (id>0) {
+	    if (id) {
 	      var entrydates = toDo.singleEntry(id);
 	    }
 
@@ -311,6 +302,7 @@ var toDo  = (function() {
 		this.text = "";
 		this.prioritaet = 3;
 		this.todoDate = "";
+		this.createDate = getToday();
 
 		this.done = false;
 
@@ -318,14 +310,9 @@ var toDo  = (function() {
 			return getToday().replace('-', '') > this.todoDate.replace('-', '')
 		};
 
-
 		// Variabeln überladen, falls settings mitgegeben
 		for (var property in settings) { 
 			this[property] = settings[property];
-		}
-
-		if (!this.id) {
-			this.id = idGenerator();
 		}
 
 	}
@@ -387,14 +374,6 @@ var toDo  = (function() {
 	}
 
 
-	// Intern Methods / Functions
-	
-
-	function idGenerator() {
-	    return Math.floor(Math.random() * 10) + Date.now();
-	};
-
-
 	// Global Namespace Methods
 	function getToday (){
 
@@ -447,20 +426,28 @@ var toDo  = (function() {
 	function newEntryToServer (NewEntry){
 
 		var postBody = {'values' : JSON.stringify(NewEntry)};
+		var serverFeedback = null;
 
-		$.post( "/entries", postBody ,function( NewEntry ) {
-			
-		});
+		$.ajax({
+		  async: false,
+	      type: "POST",
+	      url: "/entries",
+	      data: postBody,
+	      success : function(response) {
+	         serverFeedback = response;
+	      }
+	    });
 
-	}
+	    return serverFeedback;
 
-	
+	};
+
 
 	function getEntryByID (entryID) {
 
 	    var entry = $.grep(entries,
 	      function(element){
-	        return element.id == entryID;
+	        return element._id == entryID;
 	      });
 
 	    var output = entry[0];
@@ -471,11 +458,17 @@ var toDo  = (function() {
 
 	function addEntry (values){
 
+		// Make Entry Object
 		var newEntry = new Entry(values);
 
-		this.entries.push(newEntry);
+		// Send Entry to Server
+		var serverFeedback = newEntryToServer(newEntry);
 
-		newEntryToServer(newEntry);
+		// Align Generated ID to Object
+		newEntry['_id'] = serverFeedback['_id'];
+
+		// Push Entry Object Array
+		this.entries.push(newEntry);
 
 	}
 
@@ -494,9 +487,9 @@ var toDo  = (function() {
 	      });
 
 
-	      if (newEntryFormatted.id) {
+	      if (newEntryFormatted._id) {
 	        
-	        entry = toDo.singleEntry(newEntryFormatted.id);
+	        entry = toDo.singleEntry(newEntryFormatted._id);
 	        entry.updateEntry(newEntryFormatted);
 	        
 	      } else {

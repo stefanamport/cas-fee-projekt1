@@ -316,12 +316,6 @@ main {
 }
 
 #todo-entries {
-	
-	transition: 1s all;
-
-	&.loading {
-		opacity: 0;
-	}
 
 	.todo-entry {
 		

@@ -8,6 +8,8 @@
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
+		<link rel="shortcut icon" type="image/png" href="images/favicon.png">
+
 		<title>ToDo Tool</title>
 
 		<link href='https://fonts.googleapis.com/css?family=Caveat+Brush|Francois+One' rel='stylesheet' type='text/css'>
@@ -21,11 +23,14 @@
 		<header>
 			
 			<div class="logo">
+				
+
 				<div class="logocontent">
 					<div class="logotitle">getting things</div>
 					<div class="logotext">done</div>
 				</div>
 			</div>
+
 
 			<div class="subheader">
 				<div class="sub-links">
@@ -54,7 +59,7 @@
 				
 				<ul class="sorting">
 					<li><button class="btn btn-ghost active" data-sortby="todoDate" disabled>nach Erledigungsdatum</button></li>
-					<li><button class="btn btn-ghost" data-sortby="id" disabled>nach Erstellungsdatum</button></li>
+					<li><button class="btn btn-ghost" data-sortby="createDate" disabled>nach Erstellungsdatum</button></li>
 					<li><button class="btn btn-ghost" data-sortby="prioritaet" disabled>nach Priorität</button></li>
 					<li><button class="btn btn-ghost sortorder asc" data-sortorder="ASC" disabled>&darr;</button></li>
 				</ul>
@@ -79,7 +84,7 @@
 		<script type='text/template' id='todoEntry'>
 			{{#if entries}}
 				{{#each entries}}
-					<div class="todo-entry card grid {{#if done}}done{{/if}} priority{{prioritaet}} {{#if abgelaufen}}abgelaufen{{/if}}" data-id="{{id}}">
+					<div class="todo-entry card grid {{#if done}}done{{/if}} priority{{prioritaet}} {{#if abgelaufen}}abgelaufen{{/if}}" data-id="{{_id}}">
 
 					    <div class="grelem gr-2 text">
 					    	<h2>{{todoTitle}}</h2>
@@ -116,8 +121,10 @@
 		<script type='text/template' id='newNoteForm'>
 			
 			<form id="newEntry">
-
-				<input type="hidden" id="id" name="id" value="{{entry.id}}">
+				
+				{{#if entry._id}}
+				<input type="hidden" id="_id" name="_id" value="{{entry._id}}">
+				{{/if}}
 
 				<div class="formrow">
 					<label for="todoDate">Titel</label>
