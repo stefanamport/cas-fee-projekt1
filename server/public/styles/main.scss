@@ -4,8 +4,10 @@ $main-font-family: "Open Sans", sans-serif;
 $secondary-font-family:  "Francois One", sans-serif;
 
 $main-color: #30a30d;
+$main-color-secondary: red;
 $main-gray: #f3f3f3;
 $main-gray-dark: darken(#f3f3f3, 20);
+$main-gray-darker: darken(#f3f3f3, 40);
 
 $priority-color-1: #f75751;
 $priority-color-2: #fcb232;
@@ -69,7 +71,7 @@ h1 {
 	color: $main-gray-dark;
 }
 
-.btn {
+.button {
 	border: 0px;
 
 	background: $main-gray-dark;
@@ -81,26 +83,30 @@ h1 {
 
 	transition: .2s all;
 
+	margin-right: 3px;
+
+	&:last-child {
+		margin-right: 0px;
+	}
+
 	&:hover {
 		background: lighten($main-gray-dark, 5); 
 	}
 
-	&.btn-hervorgehoben {
+	&.button-hervorgehoben {
 		background: $main-color;
 		color: #fff;
 		font-weight: bold;
-
-		margin-right: 5px;
 
 		&:enabled:hover {
 			background: darken($main-color, 5); 
 		}
 	}
 
-	&.btn-ghost {
+	&.button-ghost {
 		background: none;
-		border: 1px solid $main-gray-dark;
-		color: $main-gray-dark;
+		border: 1px solid $main-gray-darker;
+		color: $main-gray-darker;
 
 		&:enabled:hover {
 			color: #000;
@@ -109,11 +115,13 @@ h1 {
 
 		&.active {
 			background: $main-gray-dark;
+			border-color: $main-gray-dark;
 			color: #000;
 		}
+
 	}
 
-	&.btn-small {
+	&.button-small {
 		font-size: 0.7em;
 		padding: 4px 10px;
 		display: none;
@@ -122,6 +130,46 @@ h1 {
 	&:disabled {
 		opacity: .4;
 		cursor: auto;
+	}
+
+	.iconHamburger {
+		display: inline-block;
+		margin-right: 7px;
+
+		&, &:after, &:before {
+			content: "";
+			width: 10px;
+			height: 1px;
+			background: $main-gray-dark;
+			position: relative;
+		}
+
+		&:after {
+			position: absolute;
+			top: -3px;
+			left: 0px;
+		}
+		&:before {
+			position: absolute;
+			top: -6px;
+			left: 0px;
+		}
+	}
+	&.active .iconHamburger {
+		& {
+			transform: rotate(45deg);
+			top: -3px;
+		}
+		&, &:after, &:before {
+			background: #fff;
+		}
+		&:after {
+			transform: rotate(-90deg);
+			top: 0px;
+		}
+		&:before {
+			display: none;
+		}
 	}
 }
 
@@ -227,38 +275,41 @@ h1 {
 header {
 	box-shadow: 0 0 5px rgba(0,0,0,.3);
 
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+
 	.logo {
-		
-		position: relative;
-		overflow: hidden;
 
 		display: flex;
-		flex-flow: row wrap;
+		flex-flow: row nowrap;
 		align-items: center;
-
-		clip-path: polygon(0 0, 52% 5%, 87% 36%, 57% 90%, 0 100%);
-		box-shadow: 1px 1px 0 rgba(0,0,0,.4);
-
-		width: 120px;
-		height: 100px;
 
 		padding: $boxpadding;
 
-		background: $main-color;
-		
-		.logocontent {
-			.logotext {
-				color: #fff;
-				font-size: 2em;
-				line-height: normal;
-				font-weight: bold;
-				text-transform: uppercase;
-			}
+		font-family: $secondary-font-family;
+		color: $main-color-secondary;
 
-			.logotitle {
-				font-size: 0.7em;
-				font-weight: normal;
-				color: #fff;
+		
+		.logoimg {
+			text-align: center;
+			margin-right: $boxpadding;
+			img {
+				width: 60px;
+				transition: .6s all;
+			}
+		}
+		
+		.logotext {
+			text-align: center;
+			
+			.logoClaim {
+				font-size: 0.8em;
+				line-height: 1.2em;
+			}
+			.logoMain {
+				font-size: 2em;
+				line-height: 0.8em;
 			}
 		}
 	}
@@ -267,9 +318,8 @@ header {
 		background: $main-gray;
 		padding: $boxpadding/2 $boxpadding;
 		display: flex;
-		
-		margin-top: -50px;
-		padding-left: 120px;
+
+		width: 100%;
 
 		.sub-rechts, .sub-links {
 			width: 50%;
@@ -292,6 +342,10 @@ main {
 	padding: $boxpadding* 3 $boxpadding;
 }
 
+.showfilters {
+	display: none;
+}
+
 .filteroptionen {
 
 	display: flex;
@@ -301,6 +355,10 @@ main {
 	ul {
 
 		margin-right: $boxpadding*2;
+
+		&:last-child {
+			border-bottom: none;
+		}
 
 		li {
 			margin: 0px;
@@ -565,7 +623,7 @@ form {
 			background-size: cover;
 		}
 
-		.btn {
+		.button {
 
 			background: $girly-bright;
 
@@ -573,7 +631,7 @@ form {
 				background: lighten($girly-bright, 5); 
 			}
 
-			&.btn-hervorgehoben {
+			&.button-hervorgehoben {
 				background: $girly-main;
 
 				&:hover {
@@ -581,7 +639,7 @@ form {
 				}
 			}
 
-			&.btn-ghost {
+			&.button-ghost {
 				background: none;
 				border: 1px solid $girly-main;
 				color: $girly-main;
@@ -609,76 +667,86 @@ form {
 				background: $girly-bright;
 			}
 
-			.logo {
-
-				background: $girly-main;
-
-			}
-
 		}
 
 	}
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
 	
 	main {
-		margin-top: 30px;
+		margin-top: 70px;
 	}
 
-	/*
-
 	header {
-
 		position: fixed;
+		z-index: 10;
 		top: 0px;
 		left: 0px;
-
 		width: 100%;
 
-		border: 1px solid red;
+		padding: $boxpadding;
+		box-sizing: border-box;
+
+		background: #fff;
+
+		flex-flow: row nowrap;
+
+		> * {
+			width: 50%;
+		}
 
 		.logo {
-			
-			position: relative;
-			top: 0;
 
-			display: inline-block;
-			
-			clip-path: none;
-			box-shadow: 1px 1px 0 rgba(0,0,0,.4);
+			padding: 0px;
 
-			width: auto;
-			height: auto;
-		
+			.logoimg img {
+				transform: rotate(360deg);
+			}
 		}
 
 		.subheader {
-
-			width: auto;
-
-			background: $main-gray;
-
-			border: 1px solid red;
-
-
-			.sub-rechts, .sub-links {
-				width: 50%;
-			}
-			.sub-rechts {
-
-				display: flex;
-				justify-content: flex-end;
+				background: #fff;
+				padding: 0px;
+				flex-flow: row wrap;
 				align-items: center;
 
-				.designwahl {
-					font-size: 0.7em;
+				.sub-rechts, .sub-links {
+					width: 100%;
+					text-align: right;
 				}
-
+				.sub-rechts {
+					order: 1;
+				}
+				.sub-links {
+					order: 2;
+				}
 			}
+
+	}
+
+	.showfilters {
+		display: block;
+		margin-bottom: $boxpadding;
+		text-align: right;
+	}
+
+	.filteroptionen {
+		display: none;
+		margin: 0 0 $boxpadding 0;
+
+		background: $main-gray;
+
+		padding: $boxpadding $boxpadding 0 $boxpadding;
+
+		&.visible {
+			display: block;
+		}
+
+		.button {
+			margin-bottom: $boxpadding;
 		}
 	}
-	*/
 
 
 	form {

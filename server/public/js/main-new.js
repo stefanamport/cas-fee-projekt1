@@ -3,11 +3,8 @@
 	- Express server & gulp?
 
 	- Installationsanleitung
-
-	- favicon
 	
 	HTML/CSS
-	- responsive
 	- w3c validating
 
 	Struktur / JS
@@ -63,6 +60,11 @@
 	    	}
 
 	      	toDoDesign.displayEntries();
+	    });
+
+	    $('.mobile-filter-trigger').on('click', function(){
+	    	$('.filteroptionen').toggleClass('visible');
+	    	$(this).toggleClass('active');
 	    });
 
 	    $('.filters button').on('click', function(){

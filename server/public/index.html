@@ -24,17 +24,20 @@
 			
 			<div class="logo">
 				
+				<div class="logoimg">
+				<img src="images/superman_128px.png" alt="Logo Getting Things Done">
+				</div>
 
-				<div class="logocontent">
-					<div class="logotitle">getting things</div>
-					<div class="logotext">done</div>
+				<div class="logotext">
+					<div class="logoClaim">getting things</div>
+					<div class="logoMain">done</div>
 				</div>
 			</div>
 
 
 			<div class="subheader">
 				<div class="sub-links">
-					<button class="btn btn-hervorgehoben" id="showEntryForm">Neuer Eintrag</button>
+					<button class="button button-hervorgehoben" id="showEntryForm">Neuer Eintrag</button>
 				</div>
 				
 
@@ -55,17 +58,21 @@
 
 		<main>
 			
+			<div class="showfilters">
+				<button class="button button-ghost mobile-filter-trigger"><div class="iconHamburger"></div>Filter Optionen</button>
+			</div>
+			
 			<div class="filteroptionen">
 				
 				<ul class="sorting">
-					<li><button class="btn btn-ghost active" data-sortby="todoDate" disabled>nach Erledigungsdatum</button></li>
-					<li><button class="btn btn-ghost" data-sortby="createDate" disabled>nach Erstellungsdatum</button></li>
-					<li><button class="btn btn-ghost" data-sortby="prioritaet" disabled>nach Priorität</button></li>
-					<li><button class="btn btn-ghost sortorder asc" data-sortorder="ASC" disabled>&darr;</button></li>
+					<li><button class="button button-ghost active" data-sortby="todoDate" disabled>nach Erledigungsdatum</button></li>
+					<li><button class="button button-ghost" data-sortby="createDate" disabled>nach Erstellungsdatum</button></li>
+					<li><button class="button button-ghost" data-sortby="prioritaet" disabled>nach Priorität</button></li>
+					<li><button class="button button-ghost sortorder asc" data-sortorder="ASC" disabled>&darr;</button></li>
 				</ul>
 
 				<ul class="filters">
-					<li><button class="btn btn-ghost" data-filter="showAll">zeige erledigte</button></li>
+					<li><button class="button button-ghost" data-filter="showAll">zeige erledigte</button></li>
 				</ul>
 
 			</div>
@@ -104,9 +111,9 @@
 					    </div>
 
 						<div class="grelem gr-1 triggers">
-							<button class="btn btn-small btn-ghost entryUndone">nicht erledigt</button>
-							<button class="btn btn-small entryDone">erledigt</button>
-							<button class="btn btn-small btn-ghost entryEdit">bearbeiten</button>
+							<button class="button button-small button-ghost entryUndone">nicht erledigt</button>
+							<button class="button button-small entryDone">erledigt</button>
+							<button class="button button-small button-ghost entryEdit">bearbeiten</button>
 					    </div>
 
 					</div>
@@ -162,8 +169,8 @@
 					<input type="date" id="todoDate" name="todoDate" value="{{#if entry.todoDate}}{{entry.todoDate}}{{else}}{{entry.today}}{{/if}}" required="required" />
 				</div>
 				<div class="formrow submitarea">
-					<button type="submit" class="btn btn-hervorgehoben">speichern</button>
-					<button type="reset" id="closeForm" class="btn btn-ghost">abbrechen</button>
+					<button type="submit" class="button button-hervorgehoben">speichern</button>
+					<button type="reset" id="closeForm" class="button button-ghost">abbrechen</button>
 				</div>
 			</form>
 
