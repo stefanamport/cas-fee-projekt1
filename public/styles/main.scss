@@ -215,7 +215,6 @@ h1 {
 
 .lightbox {
 	
-	
 
 	position: fixed;
 	top: 0px;
@@ -610,10 +609,29 @@ form {
 		}
 
 		header {
-			.subheader {
-				background: $neg-bright;
+			
+			background: $neg-dark-brighter;
+			color: #fff;
+
+			.logo {
+				color: $neg-bright;
 			}
 
+			.subheader {
+				background: $neg-dark-brighter;
+			}
+
+		}
+
+		.lightbox {
+
+		  	.overlay {
+				background: rgba(0,0,0,.8);
+		  	}
+			
+			.content {
+				background: $neg-dark-brighter;
+			}
 		}
 
 	}
@@ -623,7 +641,7 @@ form {
 		
 		$girly-dark: #000;
 		$girly-bright: #fbe2ff;
-		$girly-main: #e46cf7;
+		$girly-main: #c23527;
 
 		background: #fff;
 		color: $girly-dark;
@@ -684,6 +702,13 @@ form {
 
 
 		header {
+			
+			background: $girly-bright;
+
+			.logo {
+				color: $girly-main;
+			}
+
 			.subheader {
 				background: $girly-bright;
 			}

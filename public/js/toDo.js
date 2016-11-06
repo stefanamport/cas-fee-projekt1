@@ -29,6 +29,7 @@ var toDo  = (function() {
 	}
 
 	//Entry Methods
+
 	Entry.prototype.toggleDone = function () {
 
 		var doneValues = {};
@@ -165,6 +166,9 @@ var toDo  = (function() {
 	        
 	        entry = toDo.singleEntry(newEntryFormatted._id);
 	        entry.updateEntry(newEntryFormatted);
+
+	        // Evtl. etwas unsaubere lösung? :-)
+			toDoView.displayEntries();
 	        
 	      } else {
 	        // new Entry

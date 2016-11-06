@@ -18,12 +18,23 @@
 
 	   $('#design').on('change', function(){
 	   		var designname = $(this).find("option:selected").val();
-	     $('body').addClass(designname);
 
-	     // inaktive Design Klassen entfernen
-	     $(this).find('option').not(':selected').each(function(){
-	         $('body').removeClass($(this).val());
-	     });
+		     $('body').addClass(designname);
+
+		     // inaktive Design Klassen entfernen
+		     $(this).find('option').not(':selected').each(function(){
+		         $('body').removeClass($(this).val());
+		     });
+
+		     // Logo austauschen :-)
+		     if (designname == "design-girly") {
+		     	$('.logoimg img').attr("src", "images/wonder-women_128px.png");
+		     } else if (designname == "design-negativ") {
+		     	$('.logoimg img').attr("src", "images/spy_128px.png");
+		     } else {
+		     	$('.logoimg img').attr("src", "images/superman_128px.png");
+		     }
+
 	   });
 
 	   $('#showEntryForm').on('click', function(){

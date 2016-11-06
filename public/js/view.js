@@ -2,6 +2,8 @@
 
 var toDoView = (function() {
 
+	"use strict";
+
 	function sortFilterEntries (entries) {
 
 	    // Get Sort Values
