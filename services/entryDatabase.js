@@ -17,8 +17,8 @@ module.exports.showEntryAll = function(req, res) {
 module.exports.showEntry = function(req, res) {
 
     //var entry = db.get( req.params["_id"] );
-    console.log(req);
-    console.log(req.params["_id"]);
+    //console.log(req);
+    //console.log(req.params["_id"]);
 
     db.find({ "_id": id }, function (err, docs) {
         
@@ -27,8 +27,6 @@ module.exports.showEntry = function(req, res) {
 };
 
 module.exports.addEntry = function(req,res){
-
-    console.log(req.body.values);
 
     var entry = JSON.parse(req.body.values);
 
@@ -46,13 +44,7 @@ module.exports.deleteEntry = function(req,res){
 
 module.exports.updateEntry = function(req,res){
 
-    console.log('arriba');
-
     var entry = JSON.parse(req.body.values);
-
-    console.log(req.params.id);
-    console.log(entry);
-
     
     db.update({ "_id": req.params.id }, entry, {}, function (err, numReplaced) {
 

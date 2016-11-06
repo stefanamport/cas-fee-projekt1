@@ -1,9 +1,10 @@
 # cas-fee-projekt1
 
+Installation:
+npm install
 
-To Start Project Server, Run in Console:
-
-cd server
+Start Server
 npm start
 
-> GO TO: http://localhost:3000/
+Server Runs on:
+http://localhost:3000/

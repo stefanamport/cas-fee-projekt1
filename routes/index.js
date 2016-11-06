@@ -8,12 +8,8 @@ router.get('/', function(req, res, next) {
 
 var entries = require('../services/entryDatabase.js');
 
-//router.get("/", orders.showIndex);
-//router.get("/entry", orders.createOrder);
-
 router.get("/entries", entries.showEntryAll);
 router.post("/entries", entries.addEntry);
 router.post("/entries/:id/update", entries.updateEntry);
-//router.delete("/entries/:id", entries.deleteEntry);
 
 module.exports = router;
