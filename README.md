@@ -3,7 +3,7 @@
 Installation:
 npm install
 
-Start Server
+Start Server:
 npm start
 
 Server Runs on:
