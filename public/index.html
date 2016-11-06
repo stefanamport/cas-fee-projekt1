@@ -101,10 +101,13 @@
 
 					    <div class="grelem gr-1 date">
 					    	{{#if doneDate}}
-								<div class="small">erledigt am {{formatDate doneDate "DD.MM.YYYY"}}</div>
-					    	{{else}}
-								<div class="small">zu erledigen bis:</div>
+								<div class="small erledigtam">erledigt am {{formatDate doneDate "DD.MM.YYYY"}}</div>
+							{{/if}}
+					    	{{#if todoDate}}
+					    		<div class="zuerledigenbis">
+								<div class="small zuerledigenbis">zu erledigen bis:</div>
 					    		{{#if abgelaufen}}<span class="emoji">💩</span>{{/if}} {{formatDate todoDate "DD.MM.YYYY"}}
+					    		</div>
 					    	{{/if}}
 					
 					    </div>
@@ -179,8 +182,11 @@
 		<script src="lib/moment.min.js" ></script>
 		<script src="lib/handlebars.min.js" ></script>
 		<script src="lib/handlebars-helpers.js" ></script>
-		<script src="js/main.js" ></script>
 
+		<script src="js/serverService.js" ></script>
+		<script src="js/toDo.js" ></script>
+		<script src="js/view.js" ></script>
+		<script src="js/main.js" ></script>
 
 	</body>
 </html>

@@ -3,8 +3,8 @@
 $main-font-family: "Open Sans", sans-serif;
 $secondary-font-family:  "Francois One", sans-serif;
 
-$main-color: #30a30d;
-$main-color-secondary: red;
+$main-color: #4ab8a1;
+$main-color-secondary: #c23527;
 $main-gray: #f3f3f3;
 $main-gray-dark: darken(#f3f3f3, 20);
 $main-gray-darker: darken(#f3f3f3, 40);
@@ -288,7 +288,7 @@ header {
 		padding: $boxpadding;
 
 		font-family: $secondary-font-family;
-		color: $main-color-secondary;
+		color: $main-color;
 
 		
 		.logoimg {
@@ -393,6 +393,16 @@ main {
 			}
 		}
 
+		.date {
+
+			.erledigtam {
+				display: none;
+			}
+			.zuerledigenbis {
+				display: block;
+			}
+		}
+
 		&.done {
 			
 			opacity: .8;
@@ -414,6 +424,15 @@ main {
 
 			.date {
 				order: 2;
+
+				.erledigtam {
+					display: block;
+				}
+
+				.zuerledigenbis {
+					display: none;
+				}
+
 			}
 
 			.text {
@@ -450,11 +469,13 @@ main {
 		}
 
 		&.doneAnimation {
-			// Optionale animation?
 
 			.date {
-				opacity: 0;
+				.zuerledigenbis {
+					display: none;
+				}
 			}
+
 		}
 
 		> div {
